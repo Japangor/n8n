@@ -1,0 +1,72 @@
+---
+import GuideLayout from '../layouts/GuideLayout.astro';
+import WorkflowGrid from '../components/WorkflowGrid.astro';
+import { getAllWorkflows } from '../lib/workflows';
+
+const aiWorkflows = (await getAllWorkflows()).filter(
+  (w) =>
+    w.data.category === 'ai-agents' ||
+    w.data.category === 'chat' ||
+    w.data.category === 'voice' ||
+    w.data.tags.includes('ai-agent'),
+);
+
+const faqs = [
+  {
+    question: 'What is an n8n AI agent?',
+    answer:
+      'An n8n AI agent workflow chains LLM nodes with tools (HTTP, databases, scrapers) so the model can take multi-step actions autonomously within guardrails you define.',
+  },
+  {
+    question: 'Does n8n support Claude and OpenAI?',
+    answer:
+      'Yes. Use native AI nodes or HTTP nodes with Anthropic Claude, OpenAI, and compatible APIs — both trend heavily in India alongside n8n ai searches.',
+  },
+  {
+    question: 'n8n AI agent vs Zapier AI?',
+    answer:
+      'n8n offers deeper custom code, self-hosting, and complex branching. See our n8n vs Zapier comparison for a full breakdown.',
+  },
+];
+---
+
+<GuideLayout
+  title="n8n AI Agents — Free Workflow Templates"
+  description="Build n8n AI agents with free downloadable workflows. Chat bots, voice agents, script generators, and tool-calling automations for n8n ai and n8n ai agent searches."
+  path="/n8n-ai-agents"
+  breadcrumbs={[
+    { name: 'Home', path: '/' },
+    { name: 'n8n AI Agents', path: '/n8n-ai-agents' },
+  ]}
+  faqs={faqs}
+>
+  <p>
+    <strong>n8n ai</strong> and <strong>n8n ai agent</strong> are among the fastest-growing queries in
+    India and globally. AI agents in n8n combine large language models with your existing stack —
+    CRM, sheets, email, scrapers — without locking you into a single SaaS UI.
+  </p>
+
+  <h2>How n8n AI agents work</h2>
+  <ol>
+    <li><strong>Trigger</strong> — webhook, schedule, or chat message.</li>
+    <li><strong>Reason</strong> — LLM node (Claude, GPT, etc.) with system prompt.</li>
+    <li><strong>Act</strong> — tool nodes call APIs, update rows, send email.</li>
+    <li><strong>Loop</strong> — agent memory nodes keep context across turns.</li>
+  </ol>
+
+  <h2>Popular agent templates</h2>
+  <ul>
+    <li><a href="/workflows/chat-bot">Chat Bot Agent</a> — support and lead qual</li>
+    <li><a href="/workflows/voice-agent">Voice Agent</a> — telephony + TTS</li>
+    <li><a href="/workflows/cold-email-agent">Cold Email Agent</a> — personalized outbound</li>
+    <li><a href="/workflows/avatar-agent">Avatar Agent</a> — script + video handoff</li>
+  </ul>
+
+  <h2>MCP and agents</h2>
+  <p>
+    Model Context Protocol (MCP) extends what agents can reach. Read our
+    <a href="/n8n-mcp">n8n MCP guide</a> to wire external tools cleanly.
+  </p>
+
+  <WorkflowGrid workflows={aiWorkflows} />
+</GuideLayout>

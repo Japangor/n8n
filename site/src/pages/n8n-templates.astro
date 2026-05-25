@@ -1,0 +1,45 @@
+---
+import GuideLayout from '../layouts/GuideLayout.astro';
+import WorkflowGrid from '../components/WorkflowGrid.astro';
+import { getAllWorkflows } from '../lib/workflows';
+
+const workflows = await getAllWorkflows();
+const faqs = [
+  {
+    question: 'What are n8n templates?',
+    answer: 'Pre-built workflow graphs you import and customize — saving hours vs building from blank canvas.',
+  },
+  {
+    question: 'n8n templates vs n8n workflows?',
+    answer: 'Same thing in practice. "Templates" emphasizes copy-paste; "workflows" emphasizes the running automation.',
+  },
+];
+---
+
+<GuideLayout
+  title="n8n Templates — Free Downloadable Workflows"
+  description="Free n8n templates for AI agents, lead gen, email, and social media. Targets n8n templates (+20% worldwide)."
+  path="/n8n-templates"
+  breadcrumbs={[
+    { name: 'Home', path: '/' },
+    { name: 'n8n Templates', path: '/n8n-templates' },
+  ]}
+  faqs={faqs}
+>
+  <p>
+    <strong>n8n templates</strong> (+20%) are the fastest way to ship automation. Each template here
+    includes a description, integration list, and one-click download.
+  </p>
+
+  <h2>Template categories</h2>
+  <ul>
+    <li><a href="/categories/ai-agents">AI Agents</a></li>
+    <li><a href="/categories/lead-gen">Lead Generation</a></li>
+    <li><a href="/categories/email">Email & Outreach</a></li>
+    <li><a href="/categories/video">Video & Avatar</a></li>
+    <li><a href="/categories/social-media">Social Media</a></li>
+  </ul>
+
+  <h2>All templates</h2>
+  <WorkflowGrid workflows={workflows} />
+</GuideLayout>

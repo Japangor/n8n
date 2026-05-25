@@ -1,0 +1,51 @@
+---
+import GuideLayout from '../layouts/GuideLayout.astro';
+import CodeBlock from '../components/CodeBlock.astro';
+
+const npmInstall = `npm install n8n -g
+n8n start`;
+
+const faqs = [
+  {
+    question: 'n8n download — what are my options?',
+    answer: 'Docker (recommended), npm global install, or source build from GitHub. Docker is the most common for production.',
+  },
+  {
+    question: 'Self-host vs n8n Cloud?',
+    answer: 'Self-host for control and scale economics. Cloud for fastest setup without server admin.',
+  },
+];
+---
+
+<GuideLayout
+  title="n8n Download & Self-Host Guide"
+  description="n8n download and self-host options: Docker, npm, requirements, and security tips. Targets n8n download and self-host searches."
+  path="/n8n-self-host"
+  breadcrumbs={[
+    { name: 'Home', path: '/' },
+    { name: 'n8n Self-Host', path: '/n8n-self-host' },
+  ]}
+  faqs={faqs}
+>
+  <p>
+    <strong>n8n download</strong> usually means getting a runnable instance — not a separate desktop app.
+    Most teams use Docker; developers sometimes use npm.
+  </p>
+
+  <h2>Recommended: Docker</h2>
+  <p>Follow our complete <a href="/n8n-docker">n8n Docker guide</a> with compose snippets for India timezone defaults.</p>
+
+  <h2>Alternative: npm</h2>
+  <CodeBlock code={npmInstall} />
+  <p>Requires Node.js 18+. Better for quick local experiments than production clusters.</p>
+
+  <h2>Minimum requirements</h2>
+  <ul>
+    <li>2 GB RAM for light workloads; 4 GB+ for AI-heavy flows</li>
+    <li>Persistent disk for <code>~/.n8n</code> database and credentials</li>
+    <li>HTTPS reverse proxy for webhooks in production</li>
+  </ul>
+
+  <h2>Load free workflows</h2>
+  <p>After install, browse <a href="/free-n8n-workflows">free n8n workflows</a> and import JSON/ZIP files.</p>
+</GuideLayout>

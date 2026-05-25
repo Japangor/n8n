@@ -1,0 +1,56 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import FAQ from '../components/FAQ.astro';
+import { breadcrumbSchema, faqSchema, articleSchema } from '../lib/schema';
+import { absoluteUrl } from '../lib/site';
+
+interface FAQItem {
+  question: string;
+  answer: string;
+}
+
+interface Props {
+  title: string;
+  description: string;
+  path: string;
+  breadcrumbs: { name: string; path: string }[];
+  faqs?: FAQItem[];
+  datePublished?: string;
+}
+
+const {
+  title,
+  description,
+  path,
+  breadcrumbs,
+  faqs = [],
+  datePublished = '2025-05-01',
+} = Astro.props;
+
+const url = absoluteUrl(path);
+const schemas = [
+  breadcrumbSchema(breadcrumbs),
+  articleSchema({
+    headline: title,
+    description,
+    url,
+    datePublished,
+  }),
+  ...(faqs.length ? [faqSchema(faqs)] : []),
+];
+---
+
+<BaseLayout title={title} description={description} canonical={url} jsonLd={schemas}>
+  <article class="mx-auto max-w-3xl px-4 py-10 sm:px-6 lg:py-14">
+    <Breadcrumbs items={breadcrumbs} />
+    <header class="mt-6">
+      <h1 class="text-3xl font-bold tracking-tight text-white sm:text-4xl">{title}</h1>
+      <p class="mt-4 text-lg text-slate-300">{description}</p>
+    </header>
+    <div class="prose-content mt-10">
+      <slot />
+    </div>
+    {faqs.length > 0 && <FAQ items={faqs} class="mt-12" />}
+  </article>
+</BaseLayout>

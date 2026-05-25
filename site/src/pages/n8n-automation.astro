@@ -1,0 +1,63 @@
+---
+import GuideLayout from '../layouts/GuideLayout.astro';
+import WorkflowGrid from '../components/WorkflowGrid.astro';
+import { getFeaturedWorkflows } from '../lib/workflows';
+
+const featured = await getFeaturedWorkflows(6);
+const faqs = [
+  {
+    question: 'What is n8n workflow automation?',
+    answer:
+      'n8n workflow automation connects apps and APIs in a visual graph. Triggers start flows; nodes transform data; branches handle errors and scale.',
+  },
+  {
+    question: 'n8n workflow automation vs Zapier?',
+    answer:
+      'n8n is source-available, self-hostable, and better for complex logic. Zapier is simpler for non-technical users. Compare on our n8n vs Zapier page.',
+  },
+  {
+    question: 'What is AI workflow automation?',
+    answer:
+      'AI workflow automation adds LLM decision steps to traditional automations — classifying tickets, drafting emails, or choosing the next API call dynamically.',
+  },
+];
+---
+
+<GuideLayout
+  title="n8n Automation & Workflow Automation Guide"
+  description="Learn n8n automation, AI workflow automation, and download free templates. Covers n8n workflow automation, workflow ai, and ai workflow automation trends."
+  path="/n8n-automation"
+  breadcrumbs={[
+    { name: 'Home', path: '/' },
+    { name: 'n8n Automation', path: '/n8n-automation' },
+  ]}
+  faqs={faqs}
+>
+  <p>
+    <strong>n8n automation</strong> sits at the intersection of integration platforms and developer
+    flexibility. Unlike rigid iPaaS tools, n8n lets you drop into JavaScript, use 400+ integrations,
+    and self-host when compliance or cost matters.
+  </p>
+
+  <h2>Workflow automation patterns</h2>
+  <h3>ETL and sync</h3>
+  <p>Move data between CRM, sheets, and warehouses on a schedule. Our <a href="/workflows/lead-gen-systems">Lead Gen Systems</a> workflow is a real-world example.</p>
+  <h3>Event-driven</h3>
+  <p>Webhooks from Stripe, GitHub, or Meta ads fire instant flows — ideal for ops teams.</p>
+  <h3>AI-augmented</h3>
+  <p>
+    <strong>AI workflow automation</strong> adds classification, generation, and routing. Pair
+    <a href="/n8n-ai-agents">AI agents</a> with traditional nodes for hybrid pipelines.
+  </p>
+
+  <h2>Getting started</h2>
+  <ol>
+    <li>Install via <a href="/n8n-docker">Docker</a> or use <a href="/n8n-cloud">n8n Cloud</a>.</li>
+    <li>Import a template from <a href="/workflows">workflows</a>.</li>
+    <li>Replace credentials and test with manual execution.</li>
+    <li>Enable triggers when logs look clean.</li>
+  </ol>
+
+  <h2>Featured automation workflows</h2>
+  <WorkflowGrid workflows={featured} />
+</GuideLayout>

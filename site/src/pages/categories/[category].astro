@@ -1,0 +1,58 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import WorkflowGrid from '../../components/WorkflowGrid.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import { CATEGORIES, type CategorySlug } from '../../lib/site';
+import { getWorkflowsByCategory, getAllCategorySlugs } from '../../lib/workflows';
+import { breadcrumbSchema, itemListSchema } from '../../lib/schema';
+import { absoluteUrl } from '../../lib/site';
+
+export function getStaticPaths() {
+  return getAllCategorySlugs().map((category) => ({
+    params: { category },
+  }));
+}
+
+const { category } = Astro.params as { category: CategorySlug };
+const meta = CATEGORIES[category];
+const workflows = await getWorkflowsByCategory(category);
+
+if (!meta) {
+  return Astro.redirect('/workflows');
+}
+
+const breadcrumbs = [
+  { name: 'Home', path: '/' },
+  { name: 'Workflows', path: '/workflows' },
+  { name: meta.label, path: `/categories/${category}` },
+];
+
+const listItems = workflows.map((w) => ({
+  name: w.data.title,
+  url: absoluteUrl(`/workflows/${w.data.slug}`),
+}));
+---
+
+<BaseLayout
+  title={`${meta.label} — n8n Workflows`}
+  description={meta.description}
+  jsonLd={[
+    breadcrumbSchema(breadcrumbs),
+    itemListSchema(`${meta.label} n8n workflows`, listItems),
+  ]}
+>
+  <div class="mx-auto max-w-6xl px-4 py-10 sm:px-6 lg:py-14">
+    <Breadcrumbs items={breadcrumbs} />
+    <header class="mt-6">
+      <h1 class="text-3xl font-bold text-white">{meta.label}</h1>
+      <p class="mt-4 max-w-2xl text-lg text-slate-300">{meta.description}</p>
+    </header>
+    {
+      workflows.length > 0 ? (
+        <WorkflowGrid workflows={workflows} class="mt-10" />
+      ) : (
+        <p class="mt-10 text-slate-400">No workflows in this category yet. Check back soon.</p>
+      )
+    }
+  </div>
+</BaseLayout>

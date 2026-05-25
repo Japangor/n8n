@@ -1,0 +1,22 @@
+---
+import WorkflowLayout from '../../layouts/WorkflowLayout.astro';
+import {
+  getAllWorkflows,
+  getWorkflowBySlug,
+  getRelatedWorkflows,
+} from '../../lib/workflows';
+
+export async function getStaticPaths() {
+  const workflows = await getAllWorkflows();
+  return workflows.map((entry) => ({
+    params: { slug: entry.data.slug },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const all = await getAllWorkflows();
+const related = getRelatedWorkflows(entry, all);
+---
+
+<WorkflowLayout entry={entry} related={related} />

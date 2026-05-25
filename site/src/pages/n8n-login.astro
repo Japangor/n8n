@@ -1,0 +1,47 @@
+---
+import GuideLayout from '../layouts/GuideLayout.astro';
+
+const faqs = [
+  {
+    question: 'Where do I n8n login?',
+    answer: 'Cloud users: https://app.n8n.cloud — Self-hosted: your own domain on port 5678 (e.g. https://n8n.yourcompany.com).',
+  },
+  {
+    question: 'Forgot n8n password on self-host?',
+    answer: 'Use CLI user management documented on docs.n8n.io or reset via environment variables on fresh installs.',
+  },
+];
+---
+
+<GuideLayout
+  title="n8n Login — Cloud & Self-Hosted Access"
+  description="n8n login help for Cloud (app.n8n.cloud) and self-hosted instances. +30% search trend in India for n8n login."
+  path="/n8n-login"
+  breadcrumbs={[
+    { name: 'Home', path: '/' },
+    { name: 'n8n Login', path: '/n8n-login' },
+  ]}
+  faqs={faqs}
+>
+  <p><strong>n8n login</strong> depends on how you deploy:</p>
+
+  <h2>n8n Cloud login</h2>
+  <ol>
+    <li>Go to <a href="https://app.n8n.cloud" rel="noopener noreferrer" target="_blank">app.n8n.cloud</a></li>
+    <li>Sign in with email or SSO (business plans)</li>
+    <li>Open <strong>Workflows</strong> and import from <a href="/workflows">n8n.gjam.in</a></li>
+  </ol>
+
+  <h2>Self-hosted login</h2>
+  <p>
+    First visitor to a fresh instance creates the owner account. Use HTTPS in production. Setup via
+    <a href="/n8n-docker">Docker</a>.
+  </p>
+
+  <h2>Security tips</h2>
+  <ul>
+    <li>Enable 2FA where available</li>
+    <li>Do not expose port 5678 publicly without auth + TLS</li>
+    <li>Rotate API keys used in workflows regularly</li>
+  </ul>
+</GuideLayout>

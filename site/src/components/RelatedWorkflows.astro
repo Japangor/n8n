@@ -1,0 +1,16 @@
+---
+import WorkflowGrid from './WorkflowGrid.astro';
+import type { WorkflowEntry } from '../lib/workflows';
+
+interface Props {
+  workflows: WorkflowEntry[];
+  class?: string;
+}
+
+const { workflows, class: className = '' } = Astro.props;
+---
+
+<section class={className}>
+  <h2 class="text-xl font-bold text-white">Related workflows</h2>
+  <WorkflowGrid workflows={workflows} class="mt-6" />
+</section>

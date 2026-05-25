@@ -1,0 +1,22 @@
+---
+import { CATEGORIES, type CategorySlug } from '../lib/site';
+
+interface Props {
+  categories: CategorySlug[];
+}
+
+const { categories } = Astro.props;
+---
+
+<div class="flex flex-wrap gap-2">
+  {
+    categories.map((slug) => (
+      <a
+        href={`/categories/${slug}`}
+        class="rounded-full border border-slate-700 bg-slate-800/80 px-3 py-1 text-xs font-medium text-slate-200 transition hover:border-brand-600 hover:text-brand-300"
+      >
+        {CATEGORIES[slug]?.label ?? slug}
+      </a>
+    ))
+  }
+</div>

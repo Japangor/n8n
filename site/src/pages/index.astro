@@ -1,0 +1,92 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Hero from '../components/Hero.astro';
+import WorkflowGrid from '../components/WorkflowGrid.astro';
+import StatBar from '../components/StatBar.astro';
+import { SITE } from '../lib/site';
+import { websiteSchema } from '../lib/schema';
+import { getAllWorkflows, getFeaturedWorkflows } from '../lib/workflows';
+
+const all = await getAllWorkflows();
+const featured = await getFeaturedWorkflows(6);
+
+const quickLinks = [
+  { href: '/free-n8n-workflows', label: 'n8n free workflows', desc: '100% free downloads' },
+  { href: '/n8n-ai-agents', label: 'n8n AI agents', desc: 'LLM + tool workflows' },
+  { href: '/n8n-automation', label: 'n8n automation', desc: 'Workflow automation guides' },
+  { href: '/n8n-docs', label: 'n8n docs', desc: 'Documentation hub' },
+  { href: '/n8n-docker', label: 'n8n docker', desc: 'Docker & compose setup' },
+  { href: '/n8n-mcp', label: 'n8n MCP', desc: 'Model Context Protocol' },
+];
+---
+
+<BaseLayout
+  title={SITE.title}
+  description={SITE.description}
+  jsonLd={websiteSchema()}
+>
+  <Hero
+    title="Free n8n workflows, templates & AI agents"
+    subtitle="Download production-ready n8n workflow JSON and ZIP files. Lead gen, cold email, voice agents, video pipelines — curated for builders searching n8n workflows, n8n templates, and n8n automation in India and worldwide."
+    ctaHref="/workflows"
+    ctaLabel="Download free workflows"
+    secondaryHref="/what-is-n8n"
+    secondaryLabel="What is n8n?"
+  />
+
+  <section class="mx-auto max-w-6xl px-4 py-12 sm:px-6">
+    <StatBar
+      stats={[
+        { value: String(all.length), label: 'Free workflows' },
+        { value: '0$', label: 'Download price' },
+        { value: '8', label: 'Categories' },
+        { value: '24/7', label: 'Self-host ready' },
+      ]}
+    />
+  </section>
+
+  <section class="mx-auto max-w-6xl px-4 pb-16 sm:px-6">
+    <div class="flex items-end justify-between gap-4">
+      <div>
+        <h2 class="text-2xl font-bold text-white">Featured n8n templates</h2>
+        <p class="mt-2 text-slate-400">
+          Trending: n8n ai, n8n workflow automation, n8n github templates
+        </p>
+      </div>
+      <a href="/workflows" class="text-sm font-medium text-brand-400 hover:text-brand-300">
+        View all →
+      </a>
+    </div>
+    <WorkflowGrid workflows={featured} class="mt-8" />
+  </section>
+
+  <section class="border-t border-slate-800 bg-slate-900/30 py-16">
+    <div class="mx-auto max-w-6xl px-4 sm:px-6">
+      <h2 class="text-2xl font-bold text-white">Popular n8n topics</h2>
+      <div class="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        {
+          quickLinks.map((l) => (
+            <a
+              href={l.href}
+              class="rounded-xl border border-slate-800 p-5 transition hover:border-brand-700/50 hover:bg-slate-900/50"
+            >
+              <p class="font-semibold text-white">{l.label}</p>
+              <p class="mt-1 text-sm text-slate-400">{l.desc}</p>
+            </a>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-3xl px-4 py-16 text-center sm:px-6">
+    <h2 class="text-2xl font-bold text-white">Why n8n.gjam.in?</h2>
+    <p class="mt-4 text-slate-300 leading-relaxed">
+      We publish <strong class="text-white">free n8n workflows</strong> you can import in one click —
+      no paywall. Whether you searched <em>n8n free</em>, <em>n8n workflows</em>, or
+      <em>n8n ai agent</em>, you get real files plus guides for Docker, self-hosting, MCP, pricing,
+      and comparisons like <a href="/openclaw-vs-n8n">OpenClaw vs n8n</a> and
+      <a href="/flowise-vs-n8n">Flowise vs n8n</a>.
+    </p>
+  </section>
+</BaseLayout>

@@ -1,0 +1,17 @@
+---
+import WorkflowCard from './WorkflowCard.astro';
+import type { WorkflowEntry } from '../lib/workflows';
+
+interface Props {
+  workflows: WorkflowEntry[];
+  class?: string;
+}
+
+const { workflows, class: className = '' } = Astro.props;
+---
+
+<div class={`grid gap-6 sm:grid-cols-2 lg:grid-cols-3 ${className}`}>
+  {workflows.map((w) => (
+    <WorkflowCard workflow={w} />
+  ))}
+</div>

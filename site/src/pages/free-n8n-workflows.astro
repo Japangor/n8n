@@ -1,0 +1,63 @@
+---
+import GuideLayout from '../layouts/GuideLayout.astro';
+import WorkflowGrid from '../components/WorkflowGrid.astro';
+import { getAllWorkflows } from '../lib/workflows';
+
+const workflows = await getAllWorkflows();
+const faqs = [
+  {
+    question: 'Is n8n free?',
+    answer:
+      'n8n is free to self-host under its fair-code license. n8n Cloud has paid tiers. All workflows on n8n.gjam.in are free to download.',
+  },
+  {
+    question: 'Are these n8n workflows really free?',
+    answer:
+      'Yes. Every JSON and ZIP on this site is $0 to download. You only pay for your own hosting, APIs, and optional n8n Cloud subscription.',
+  },
+  {
+    question: 'How do I import a free n8n workflow?',
+    answer:
+      'Download the file, open n8n → Workflows → Import from File, select the JSON or ZIP, then connect credentials.',
+  },
+];
+---
+
+<GuideLayout
+  title="Free n8n Workflows — Download Templates"
+  description="Download free n8n workflows and templates. No signup paywall — JSON and ZIP imports for self-host and n8n Cloud. Targets n8n free and n8n é gratuito searches."
+  path="/free-n8n-workflows"
+  breadcrumbs={[
+    { name: 'Home', path: '/' },
+    { name: 'Free n8n Workflows', path: '/free-n8n-workflows' },
+  ]}
+  faqs={faqs}
+>
+  <p>
+    Searching <strong>n8n free</strong> usually means one of two things: the platform cost, or free
+    workflow templates. This page covers both — and gives you immediate downloads.
+  </p>
+
+  <h2>Free platform vs free templates</h2>
+  <p>
+    <strong>Self-hosted n8n</strong> is the most popular way to run n8n at $0 software cost. You pay
+    only for a VPS or home server, electricity, and any third-party APIs (OpenAI, Apify, etc.). See
+    our <a href="/n8n-self-host">n8n self-host guide</a> and <a href="/n8n-docker">Docker setup</a>.
+  </p>
+  <p>
+    <strong>n8n Cloud</strong> offers a trial and paid plans — see <a href="/n8n-pricing">n8n pricing</a>.
+    Cloud is faster to start but not required to use our templates.
+  </p>
+
+  <h2>What you get on n8n.gjam.in</h2>
+  <ul>
+    <li>AI agent workflows (chat, voice, avatar)</li>
+    <li>Lead generation and LinkedIn scrape flows</li>
+    <li>Cold email and newsletter automation</li>
+    <li>Video pipelines (HeyGen, ElevenLabs, Veo)</li>
+    <li>Social media manager templates</li>
+  </ul>
+
+  <h2>All free downloads</h2>
+  <WorkflowGrid workflows={workflows} />
+</GuideLayout>

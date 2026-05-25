@@ -1,0 +1,51 @@
+---
+import GuideLayout from '../layouts/GuideLayout.astro';
+import WorkflowGrid from '../components/WorkflowGrid.astro';
+import { getAllWorkflows } from '../lib/workflows';
+
+const workflows = await getAllWorkflows();
+const faqs = [
+  {
+    question: 'What is the n8n GitHub repo?',
+    answer: 'https://github.com/n8n-io/n8n — main monorepo for the editor, core, and community nodes.',
+  },
+  {
+    question: 'n8n workflow github — where to find templates?',
+    answer: 'Official community gallery, GitHub gists, and curated packs like n8n.gjam.in with direct JSON/ZIP download.',
+  },
+];
+---
+
+<GuideLayout
+  title="n8n GitHub — Repo, Workflows & Community"
+  description="n8n github and github n8n resources: main repo, contributing, workflow JSON from GitHub-style searches, and free templates (+30% trend)."
+  path="/n8n-github"
+  breadcrumbs={[
+    { name: 'Home', path: '/' },
+    { name: 'n8n GitHub', path: '/n8n-github' },
+  ]}
+  faqs={faqs}
+>
+  <p>
+    <strong>n8n github</strong> and <strong>github n8n</strong> (+30%) reflect developers looking for
+    source code, issues, and importable workflow JSON — not just marketing pages.
+  </p>
+
+  <h2>Main repository</h2>
+  <p>
+    <a href="https://github.com/n8n-io/n8n" rel="noopener noreferrer" target="_blank">github.com/n8n-io/n8n</a>
+    — star the repo, read CONTRIBUTING.md, and track releases for breaking changes before upgrading Docker tags.
+  </p>
+
+  <h2>n8n workflow github pattern</h2>
+  <p>Many teams store exported JSON in private repos. Workflow:</p>
+  <ol>
+    <li>Export from n8n UI</li>
+    <li>Commit to Git with secrets stripped</li>
+    <li>CI deploys to staging n8n via API</li>
+  </ol>
+  <p>Or skip the hunt — download verified templates below (n8n workflow github alternative).</p>
+
+  <h2>Free workflow packs</h2>
+  <WorkflowGrid workflows={workflows} />
+</GuideLayout>

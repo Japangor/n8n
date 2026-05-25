@@ -1,0 +1,53 @@
+---
+import GuideLayout from '../layouts/GuideLayout.astro';
+import CodeBlock from '../components/CodeBlock.astro';
+
+const apiExample = `curl -X GET 'https://your-n8n.example.com/api/v1/workflows' \\
+  -H 'X-N8N-API-KEY: your_api_key_here'`;
+
+const faqs = [
+  {
+    question: 'Does n8n have a REST API?',
+    answer: 'Yes. Enable public API in settings, create an API key, then manage workflows and executions programmatically.',
+  },
+  {
+    question: 'n8n api vs webhooks?',
+    answer: 'API is for admin/automation of n8n itself. Webhooks are triggers inside workflows receiving external events.',
+  },
+];
+---
+
+<GuideLayout
+  title="n8n API — REST Reference & Examples"
+  description="n8n api guide: authentication, list workflows, trigger executions. For developers searching n8n api (+6% worldwide)."
+  path="/n8n-api"
+  breadcrumbs={[
+    { name: 'Home', path: '/' },
+    { name: 'n8n API', path: '/n8n-api' },
+  ]}
+  faqs={faqs}
+>
+  <p>
+    The <strong>n8n api</strong> lets you treat n8n as infrastructure — deploy workflows from CI, sync
+    with Git, or build internal developer portals.
+  </p>
+
+  <h2>Enable the API</h2>
+  <ol>
+    <li>Settings → API → Create API key</li>
+    <li>Store key in your secrets manager</li>
+    <li>Use HTTPS only</li>
+  </ol>
+
+  <h2>List workflows</h2>
+  <CodeBlock code={apiExample} />
+
+  <h2>Common use cases</h2>
+  <ul>
+    <li>Promote workflow JSON from staging to production</li>
+    <li>Monitor failed executions from PagerDuty</li>
+    <li>Seed new tenant instances with <a href="/workflows">template packs</a></li>
+  </ul>
+
+  <p>Official reference: <a href="https://docs.n8n.io/api/" rel="noopener noreferrer" target="_blank">docs.n8n.io/api</a></p>
+</GuideLayout>

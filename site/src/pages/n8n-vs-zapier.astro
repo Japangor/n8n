@@ -1,0 +1,49 @@
+---
+import GuideLayout from '../layouts/GuideLayout.astro';
+
+const faqs = [
+  {
+    question: 'Is n8n better than Zapier?',
+    answer: 'n8n is better for technical teams needing self-host, code, and complex branching. Zapier is better for quick no-code setups by non-developers.',
+  },
+  {
+    question: 'Can I migrate Zapier zaps to n8n?',
+    answer: 'There is no one-click migrator. Rebuild critical zaps in n8n using templates from n8n.gjam.in as starting points.',
+  },
+];
+---
+
+<GuideLayout
+  title="n8n vs Zapier — Honest Comparison (2025)"
+  description="n8n vs Zapier: pricing, self-hosting, AI workflows, and who should choose which. Zapier still trends but n8n wins technical teams."
+  path="/n8n-vs-zapier"
+  breadcrumbs={[
+    { name: 'Home', path: '/' },
+    { name: 'n8n vs Zapier', path: '/n8n-vs-zapier' },
+  ]}
+  faqs={faqs}
+  datePublished="2025-04-01"
+>
+  <p>
+    <strong>n8n vs Zapier</strong> is the default comparison for workflow automation. Zapier (-10% trend)
+    remains familiar; n8n climbs on AI, self-host, and cost control.
+  </p>
+
+  <h2>At a glance</h2>
+  <ul>
+    <li><strong>Pricing model</strong> — Zapier: per-task SaaS. n8n: self-host infra + optional Cloud tiers.</li>
+    <li><strong>Hosting</strong> — Zapier: cloud only. n8n: cloud or self-host.</li>
+    <li><strong>Complexity</strong> — Zapier: shallow learning curve. n8n: steeper, far more flexible.</li>
+    <li><strong>AI agents</strong> — n8n: native AI nodes + MCP patterns. Zapier: AI features on select plans.</li>
+    <li><strong>Code</strong> — n8n: JavaScript/Python in nodes. Zapier: limited code steps.</li>
+  </ul>
+
+  <h2>Choose Zapier if</h2>
+  <p>You need the fastest non-technical setup and budget is not execution-heavy.</p>
+
+  <h2>Choose n8n if</h2>
+  <p>You run agencies, AI pipelines, or high-volume sync — especially with our <a href="/free-n8n-workflows">free templates</a>.</p>
+
+  <h2>Also compare</h2>
+  <p><a href="/n8n-vs-make">n8n vs Make</a> · <a href="/openclaw-vs-n8n">OpenClaw vs n8n</a></p>
+</GuideLayout>

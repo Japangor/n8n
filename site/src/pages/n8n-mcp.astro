@@ -1,0 +1,71 @@
+---
+import GuideLayout from '../layouts/GuideLayout.astro';
+import CodeBlock from '../components/CodeBlock.astro';
+
+const faqs = [
+  {
+    question: 'What is n8n MCP?',
+    answer:
+      'MCP (Model Context Protocol) lets AI clients expose tools and context to models. In n8n, MCP-related nodes and community patterns connect agents to external MCP servers.',
+  },
+  {
+    question: 'Is n8n MCP production-ready?',
+    answer:
+      'MCP is evolving quickly. Start in staging, limit tool permissions, and log every agent action.',
+  },
+];
+const composeSnippet = `# Example: n8n with env for AI/MCP experiments
+services:
+  n8n:
+    image: n8nio/n8n
+    ports:
+      - "5678:5678"
+    environment:
+      - N8N_HOST=localhost
+      - WEBHOOK_URL=http://localhost:5678/
+    volumes:
+      - n8n_data:/home/node/.n8n
+volumes:
+  n8n_data:`;
+---
+
+<GuideLayout
+  title="n8n MCP — Model Context Protocol Guide"
+  description="Learn n8n MCP setup for AI agents connecting to Model Context Protocol servers. Rising search trend alongside n8n ai and n8n mcp (+20% worldwide)."
+  path="/n8n-mcp"
+  breadcrumbs={[
+    { name: 'Home', path: '/' },
+    { name: 'n8n MCP', path: '/n8n-mcp' },
+  ]}
+  faqs={faqs}
+>
+  <p>
+    <strong>n8n mcp</strong> searches grew as teams wire Claude, Cursor, and custom agents into
+    business automations. MCP standardizes how models discover and call tools — databases, GitHub,
+    internal APIs — without bespoke prompts per integration.
+  </p>
+
+  <h2>Why MCP matters for n8n</h2>
+  <p>
+    n8n already orchestrates APIs. MCP adds a <em>model-facing</em> tool layer: your agent workflow
+    can delegate to MCP servers while n8n handles retries, logging, and human approval steps.
+  </p>
+
+  <h2>Recommended architecture</h2>
+  <ol>
+    <li>Self-host n8n (<a href="/n8n-docker">Docker guide</a>).</li>
+    <li>Run MCP servers with least-privilege credentials.</li>
+    <li>Use AI Agent nodes with explicit tool allowlists.</li>
+    <li>Add an IF node for human approval on destructive actions.</li>
+  </ol>
+
+  <h2>Starter stack</h2>
+  <CodeBlock code={composeSnippet} language="yaml" />
+
+  <h2>Workflows to try</h2>
+  <ul>
+    <li><a href="/workflows/chat-bot">Chat Bot Agent</a></li>
+    <li><a href="/workflows/voice-agent">Voice Agent</a></li>
+    <li><a href="/n8n-ai-agents">All AI agent templates</a></li>
+  </ul>
+</GuideLayout>

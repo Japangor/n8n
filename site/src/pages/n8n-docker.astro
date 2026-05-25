@@ -1,0 +1,79 @@
+---
+import GuideLayout from '../layouts/GuideLayout.astro';
+import CodeBlock from '../components/CodeBlock.astro';
+
+const dockerRun = `docker volume create n8n_data
+
+docker run -it --rm \\
+  --name n8n \\
+  -p 5678:5678 \\
+  -e GENERIC_TIMEZONE="Asia/Kolkata" \\
+  -e TZ="Asia/Kolkata" \\
+  -e N8N_ENFORCE_SETTINGS_FILE_PERMISSIONS=true \\
+  -e N8N_RUNNERS_ENABLED=true \\
+  -v n8n_data:/home/node/.n8n \\
+  docker.n8n.io/n8nio/n8n`;
+
+const dockerCompose = `services:
+  n8n:
+    image: docker.n8n.io/n8nio/n8n
+    restart: always
+    ports:
+      - "5678:5678"
+    environment:
+      - N8N_HOST=\${SUBDOMAIN}.\${DOMAIN_NAME}
+      - N8N_PORT=5678
+      - N8N_PROTOCOL=https
+      - NODE_ENV=production
+      - WEBHOOK_URL=https://\${SUBDOMAIN}.\${DOMAIN_NAME}/
+      - GENERIC_TIMEZONE=Asia/Kolkata
+      - TZ=Asia/Kolkata
+    volumes:
+      - n8n_data:/home/node/.n8n
+
+volumes:
+  n8n_data:`;
+
+const faqs = [
+  {
+    question: 'What is the official n8n Docker image?',
+    answer: 'Use docker.n8n.io/n8nio/n8n — documented on docs.n8n.io/hosting.',
+  },
+  {
+    question: 'n8n docker compose vs docker run?',
+    answer: 'docker run is fine for local dev. docker compose is better for production with reverse proxy and backups.',
+  },
+];
+---
+
+<GuideLayout
+  title="n8n Docker & Docker Compose Setup"
+  description="Install n8n with Docker and docker compose. Covers n8n docker, docker n8n, and n8n docker compose rising searches (+30% worldwide)."
+  path="/n8n-docker"
+  breadcrumbs={[
+    { name: 'Home', path: '/' },
+    { name: 'n8n Docker', path: '/n8n-docker' },
+  ]}
+  faqs={faqs}
+>
+  <p>
+    <strong>n8n docker</strong>, <strong>docker n8n</strong>, and <strong>n8n docker compose</strong>
+    are core self-host queries — especially alongside <em>docker</em> trending worldwide (+20%).
+  </p>
+
+  <h2>Quick start with Docker</h2>
+  <CodeBlock code={dockerRun} />
+
+  <p>Open <code>http://localhost:5678</code>, create your owner account, then import workflows from <a href="/workflows">our library</a>.</p>
+
+  <h2>Docker Compose for production</h2>
+  <CodeBlock code={dockerCompose} language="yaml" />
+  <p>Put Caddy or Traefik in front for HTTPS. Set <code>WEBHOOK_URL</code> to your public URL so triggers work.</p>
+
+  <h2>After install</h2>
+  <ul>
+    <li>Import <a href="/workflows/lead-gen-apify">Lead Gen Apify</a> or <a href="/workflows/chat-bot">Chat Bot</a></li>
+    <li>Back up volume <code>n8n_data</code> regularly</li>
+    <li>Read <a href="/n8n-api">API guide</a> for programmatic control</li>
+  </ul>
+</GuideLayout>

@@ -1,0 +1,51 @@
+---
+import GuideLayout from '../layouts/GuideLayout.astro';
+
+const faqs = [
+  {
+    question: 'Flowise vs n8n — what is Flowise?',
+    answer: 'Flowise is a low-code UI for building LLM chains and agents. n8n is a general workflow automation platform with AI nodes plus traditional integrations.',
+  },
+  {
+    question: 'Can I use Flowise and n8n together?',
+    answer: 'Yes. Many teams run Flowise for chat/agent UX and n8n for scheduling, CRM sync, email, and ops glue.',
+  },
+];
+---
+
+<GuideLayout
+  title="Flowise vs n8n — AI Stacks Compared"
+  description="flowise vs n8n (+200% India): compare LLM chain builders with full workflow automation. When to use Flowise, n8n, or both."
+  path="/flowise-vs-n8n"
+  breadcrumbs={[
+    { name: 'Home', path: '/' },
+    { name: 'Flowise vs n8n', path: '/flowise-vs-n8n' },
+  ]}
+  faqs={faqs}
+>
+  <p>
+    <strong>flowise</strong> (+200% in India) and <strong>flowise vs n8n</strong> signal teams choosing
+    AI stack components, not just email zaps.
+  </p>
+
+  <h2>Flowise focus</h2>
+  <ul>
+    <li>Drag-drop LLM chains</li>
+    <li>RAG and chatbot prototypes</li>
+    <li>Developer-facing agent experiments</li>
+  </ul>
+
+  <h2>n8n focus</h2>
+  <ul>
+    <li>End-to-end business automation (CRM, email, scrape, billing)</li>
+    <li>Schedules, webhooks, error handling</li>
+    <li><a href="/workflows/voice-agent">Voice</a> and <a href="/workflows/lead-gen-apify">lead gen</a> templates ready to import</li>
+  </ul>
+
+  <h2>Decision matrix</h2>
+  <ul>
+    <li><strong>Only chat AI?</strong> Start Flowise, orchestrate with n8n later.</li>
+    <li><strong>Revenue ops automation?</strong> Start n8n, add Flowise if needed for RAG UI.</li>
+    <li><strong>Agency delivery?</strong> n8n templates on this site ship faster to clients.</li>
+  </ul>
+</GuideLayout>

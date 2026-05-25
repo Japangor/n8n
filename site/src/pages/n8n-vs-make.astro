@@ -1,0 +1,41 @@
+---
+import GuideLayout from '../layouts/GuideLayout.astro';
+
+const faqs = [
+  {
+    question: 'n8n vs Make (Integromat)?',
+    answer: 'Make offers visual scenario building with operations pricing. n8n offers self-host and deeper dev extensibility.',
+  },
+];
+---
+
+<GuideLayout
+  title="n8n vs Make — Comparison for Automators"
+  description="Compare n8n vs Make (Integromat): operations pricing, self-hosting, AI workflows, and template libraries."
+  path="/n8n-vs-make"
+  breadcrumbs={[
+    { name: 'Home', path: '/' },
+    { name: 'n8n vs Make', path: '/n8n-vs-make' },
+  ]}
+  faqs={faqs}
+>
+  <p><strong>n8n vs Make</strong> pits two visual automation giants against each other.</p>
+
+  <h2>Make strengths</h2>
+  <ul>
+    <li>Polished UI for scenario design</li>
+    <li>Large app connector library</li>
+    <li>Good for marketing ops without code</li>
+  </ul>
+
+  <h2>n8n strengths</h2>
+  <ul>
+    <li>Self-host and data control</li>
+    <li>AI agent + MCP workflows</li>
+    <li>Free templates at <a href="/workflows">n8n.gjam.in</a></li>
+    <li>No per-operation tax when self-hosted</li>
+  </ul>
+
+  <h2>Verdict</h2>
+  <p>Make for marketing teams on SaaS only. n8n for product/engineering teams and AI-heavy stacks.</p>
+</GuideLayout>

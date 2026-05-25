@@ -1,0 +1,48 @@
+---
+import GuideLayout from '../layouts/GuideLayout.astro';
+
+const faqs = [
+  {
+    question: 'What is n8n Cloud?',
+    answer: 'Hosted n8n managed by n8n GmbH — no Docker maintenance, automatic updates, and team features on higher tiers.',
+  },
+  {
+    question: 'n8n cloud vs self-host?',
+    answer: 'Cloud = speed and compliance offload. Self-host = control, data residency, and lower marginal cost at scale.',
+  },
+];
+---
+
+<GuideLayout
+  title="n8n Cloud — Hosted Automation Overview"
+  description="n8n Cloud explained: login, plans, when to choose cloud vs self-host, and importing free workflows from n8n.gjam.in."
+  path="/n8n-cloud"
+  breadcrumbs={[
+    { name: 'Home', path: '/' },
+    { name: 'n8n Cloud', path: '/n8n-cloud' },
+  ]}
+  faqs={faqs}
+>
+  <p>
+    <strong>n8n cloud</strong> (+20% worldwide) is the fastest path from signup to running workflows.
+    Sign up at app.n8n.cloud, then import our templates.
+  </p>
+
+  <h2>When Cloud makes sense</h2>
+  <ul>
+    <li>Agency MVPs without DevOps</li>
+    <li>Teams needing SSO and audit on enterprise tiers</li>
+    <li>Short-lived client projects</li>
+  </ul>
+
+  <h2>When to self-host instead</h2>
+  <ul>
+    <li>High execution volume (see <a href="/n8n-pricing">pricing</a>)</li>
+    <li>Strict data residency in India or EU</li>
+    <li>Custom nodes and forked builds</li>
+  </ul>
+
+  <p>
+    <a href="/n8n-login">n8n login guide</a> · <a href="/workflows">Download workflows</a>
+  </p>
+</GuideLayout>

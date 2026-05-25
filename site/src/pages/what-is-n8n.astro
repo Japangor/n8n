@@ -1,0 +1,62 @@
+---
+import GuideLayout from '../layouts/GuideLayout.astro';
+
+const faqs = [
+  {
+    question: 'What is n8n used for?',
+    answer:
+      'n8n is used to automate business processes: syncing data, sending notifications, running AI agents, scraping leads, and connecting hundreds of SaaS tools without custom microservices for every integration.',
+  },
+  {
+    question: 'Is n8n open source?',
+    answer:
+      'n8n uses a fair-code license (source available). You can self-host and inspect code. It is not traditional OSI open source but remains popular for self-hosters.',
+  },
+  {
+    question: 'n8n vs Zapier — which is better?',
+    answer:
+      'Zapier wins on simplicity for beginners. n8n wins on cost at scale, self-hosting, and complex workflows. See our detailed comparison.',
+  },
+];
+---
+
+<GuideLayout
+  title="What is n8n? — Explained for Beginners"
+  description="What is n8n? A fair-code workflow automation platform for technical teams. Compare to Zapier, learn pricing, and download free templates at n8n.gjam.in."
+  path="/what-is-n8n"
+  breadcrumbs={[
+    { name: 'Home', path: '/' },
+    { name: 'What is n8n', path: '/what-is-n8n' },
+  ]}
+  faqs={faqs}
+>
+  <p>
+    If you landed here from <strong>what is n8n</strong> (still a top query worldwide, though
+    cooling in India), here is the short answer: <strong>n8n is a workflow automation tool</strong> that
+    lets you connect apps and APIs on a visual canvas, with optional code when you need it.
+  </p>
+
+  <h2>Who uses n8n?</h2>
+  <ul>
+    <li>Agencies building lead-gen and outreach systems</li>
+    <li>Startups replacing brittle Zapier chains</li>
+    <li>DevOps and platform teams gluing internal tools</li>
+    <li>AI builders wiring LLMs to real business data</li>
+  </ul>
+
+  <h2>Core concepts</h2>
+  <h3>Workflows</h3>
+  <p>A workflow is a directed graph of nodes. Each node performs one action — HTTP request, send email, run AI.</p>
+  <h3>Triggers</h3>
+  <p>Cron, webhooks, or app events start execution.</p>
+  <h3>Credentials</h3>
+  <p>API keys live in encrypted credential stores, not in exported JSON you share publicly.</p>
+
+  <h2>Next steps</h2>
+  <ul>
+    <li><a href="/free-n8n-workflows">Download free workflows</a></li>
+    <li><a href="/n8n-docs">Documentation hub</a></li>
+    <li><a href="/n8n-self-host">Self-host n8n</a></li>
+    <li><a href="/n8n-pricing">Pricing overview</a></li>
+  </ul>
+</GuideLayout>

@@ -1,0 +1,67 @@
+---
+import GuideLayout from '../layouts/GuideLayout.astro';
+
+const faqs = [
+  {
+    question: 'Where are official n8n docs?',
+    answer:
+      'Official documentation lives at docs.n8n.io. n8n.gjam.in adds import guides, free templates, and India-relevant setup notes.',
+  },
+  {
+    question: 'Why is n8n docs trending?',
+    answer:
+      'Documentation searches rose +250% in India — often paired with self-hosting, Docker, MCP, and AI agent setup.',
+  },
+  {
+    question: 'n8n docs vs n8n documentation?',
+    answer:
+      'Both refer to the same official docs site. We mirror practical quick-starts here with downloadable workflows.',
+  },
+];
+---
+
+<GuideLayout
+  title="n8n Docs — Guides, Import Help & Resources"
+  description="n8n docs hub: links to official documentation plus practical guides for Docker, MCP, API, self-host, and free workflow imports. Rising +250% in India."
+  path="/n8n-docs"
+  breadcrumbs={[
+    { name: 'Home', path: '/' },
+    { name: 'n8n Docs', path: '/n8n-docs' },
+  ]}
+  faqs={faqs}
+>
+  <p>
+    Searches for <strong>n8n docs</strong> and <strong>n8n documentation</strong> spiked recently —
+    especially in India (+250%). Builders want fast answers beyond the official reference.
+  </p>
+
+  <h2>Official documentation</h2>
+  <p>
+    Start with the official docs at <a href="https://docs.n8n.io" rel="noopener noreferrer" target="_blank">docs.n8n.io</a> for node reference, credentials, and enterprise features.
+  </p>
+
+  <h2>Practical guides on n8n.gjam.in</h2>
+  <ul>
+    <li><a href="/n8n-docker">n8n Docker & docker compose</a></li>
+    <li><a href="/n8n-self-host">n8n download & self-host</a></li>
+    <li><a href="/n8n-mcp">n8n MCP integration</a></li>
+    <li><a href="/n8n-api">n8n API usage</a></li>
+    <li><a href="/n8n-github">n8n GitHub & community repos</a></li>
+    <li><a href="/n8n-login">n8n login (Cloud)</a></li>
+  </ul>
+
+  <h2>Import workflow documentation</h2>
+  <ol>
+    <li>Download JSON or ZIP from any <a href="/workflows">workflow page</a>.</li>
+    <li>n8n UI → <strong>Workflows</strong> → <strong>Import from File</strong>.</li>
+    <li>Open each node flagged with missing credentials.</li>
+    <li>Run once manually; check execution log.</li>
+    <li>Activate trigger nodes.</li>
+  </ol>
+
+  <h2>Template library</h2>
+  <p>
+    Official n8n has a template gallery; we curate agency-ready packs (lead gen, cold email, voice) with
+    direct file downloads — see <a href="/workflows">all workflows</a>.
+  </p>
+</GuideLayout>
