@@ -11,12 +11,15 @@ const all = await getAllWorkflows();
 const featured = await getFeaturedWorkflows(6);
 
 const quickLinks = [
-  { href: '/free-n8n-workflows', label: 'n8n free workflows', desc: '100% free downloads' },
-  { href: '/n8n-ai-agents', label: 'n8n AI agents', desc: 'LLM + tool workflows' },
-  { href: '/n8n-automation', label: 'n8n automation', desc: 'Workflow automation guides' },
-  { href: '/n8n-docs', label: 'n8n docs', desc: 'Documentation hub' },
+  { href: '/free-n8n-workflows', label: 'Free n8n workflows', desc: '100% free JSON & ZIP downloads' },
+  { href: '/n8n-ai-agents', label: 'n8n AI agents', desc: 'LLM + tool-calling templates' },
+  { href: '/n8n-automation', label: 'n8n automation', desc: 'Workflow automation playbook' },
+  { href: '/n8n-docs', label: 'n8n docs hub', desc: 'Guides + official documentation' },
   { href: '/n8n-docker', label: 'n8n docker', desc: 'Docker & compose setup' },
   { href: '/n8n-mcp', label: 'n8n MCP', desc: 'Model Context Protocol' },
+  { href: '/n8n-self-host', label: 'n8n self-host', desc: 'Full production hardening guide' },
+  { href: '/n8n-pricing', label: 'n8n pricing', desc: 'Cost math vs Zapier and Make' },
+  { href: '/n8n-vs-zapier', label: 'n8n vs Zapier', desc: 'Honest comparison' },
 ];
 ---
 
@@ -27,7 +30,7 @@ const quickLinks = [
 >
   <Hero
     title="Free n8n workflows, templates & AI agents"
-    subtitle="Download production-ready n8n workflow JSON and ZIP files. Lead gen, cold email, voice agents, video pipelines — curated for builders searching n8n workflows, n8n templates, and n8n automation in India and worldwide."
+    subtitle="Download production-ready n8n workflow JSON and ZIP files. Lead generation, cold email, voice agents, video pipelines, and AI automations — curated for builders searching n8n workflows, templates, and automation in India and worldwide."
     ctaHref="/workflows"
     ctaLabel="Download free workflows"
     secondaryHref="/what-is-n8n"
@@ -38,7 +41,7 @@ const quickLinks = [
     <StatBar
       stats={[
         { value: String(all.length), label: 'Free workflows' },
-        { value: '0$', label: 'Download price' },
+        { value: '$0', label: 'Download price' },
         { value: '8', label: 'Categories' },
         { value: '24/7', label: 'Self-host ready' },
       ]}
@@ -50,7 +53,7 @@ const quickLinks = [
       <div>
         <h2 class="text-2xl font-bold text-white">Featured n8n templates</h2>
         <p class="mt-2 text-slate-400">
-          Trending: n8n ai, n8n workflow automation, n8n github templates
+          Hand-picked workflows we use in production — chat bots, lead gen, voice agents, video pipelines.
         </p>
       </div>
       <a href="/workflows" class="text-sm font-medium text-brand-400 hover:text-brand-300">
@@ -63,6 +66,9 @@ const quickLinks = [
   <section class="border-t border-slate-800 bg-slate-900/30 py-16">
     <div class="mx-auto max-w-6xl px-4 sm:px-6">
       <h2 class="text-2xl font-bold text-white">Popular n8n topics</h2>
+      <p class="mt-2 text-slate-400">
+        Deep guides for the queries Indian and worldwide builders search every day.
+      </p>
       <div class="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {
           quickLinks.map((l) => (
@@ -79,14 +85,74 @@ const quickLinks = [
     </div>
   </section>
 
-  <section class="mx-auto max-w-3xl px-4 py-16 text-center sm:px-6">
-    <h2 class="text-2xl font-bold text-white">Why n8n.gjam.in?</h2>
-    <p class="mt-4 text-slate-300 leading-relaxed">
-      We publish <strong class="text-white">free n8n workflows</strong> you can import in one click —
-      no paywall. Whether you searched <em>n8n free</em>, <em>n8n workflows</em>, or
-      <em>n8n ai agent</em>, you get real files plus guides for Docker, self-hosting, MCP, pricing,
-      and comparisons like <a href="/openclaw-vs-n8n">OpenClaw vs n8n</a> and
-      <a href="/flowise-vs-n8n">Flowise vs n8n</a>.
-    </p>
+  <section class="mx-auto max-w-4xl px-4 py-16 sm:px-6">
+    <div class="prose-content">
+      <h2>Why we built n8n.gjam.in</h2>
+      <p>
+        n8n is one of the most powerful automation platforms available today, yet most search
+        results for <em>n8n workflows</em>, <em>n8n templates</em>, or <em>n8n ai agent</em> lead to
+        marketing pages, paywalls, or YouTube videos with no downloadable file. We built this site
+        so you can <strong>find a workflow, click download, and import it into n8n in under two
+        minutes</strong> — no signup, no email gate, no upsell.
+      </p>
+      <p>
+        Every JSON and ZIP file on this site has been tested in our own n8n instance. Each workflow
+        page documents the required integrations, the file size, the format, the use cases, and the
+        exact import steps. If you have ever wasted an hour trying to import a workflow that turned
+        out to be incomplete, this site is for you.
+      </p>
+
+      <h2>What you'll find here</h2>
+      <h3>Workflow templates</h3>
+      <p>
+        Free downloadable workflows across <a href="/categories/ai-agents">AI agents</a>,
+        <a href="/categories/lead-gen">lead generation</a>, <a href="/categories/email">cold
+        email</a>, <a href="/categories/video">video pipelines</a>,
+        <a href="/categories/voice">voice agents</a>, <a href="/categories/social-media">social
+        media</a>, <a href="/categories/onboarding">onboarding</a>, and
+        <a href="/categories/chat">chat bots</a>. Each template imports cleanly into both
+        n8n Cloud and self-hosted instances.
+      </p>
+      <h3>Practical setup guides</h3>
+      <p>
+        Step-by-step guides for the things builders actually need:
+        <a href="/n8n-docker">Docker and Docker Compose</a>, <a href="/n8n-self-host">self-hosting
+        on a VPS</a>, <a href="/n8n-api">the n8n REST API</a>,
+        <a href="/n8n-mcp">Model Context Protocol</a> integration, and
+        <a href="/n8n-login">login / 2FA</a> troubleshooting.
+      </p>
+      <h3>Honest comparisons</h3>
+      <p>
+        Opinionated but fair comparisons: <a href="/n8n-vs-zapier">n8n vs Zapier</a>,
+        <a href="/n8n-vs-make">n8n vs Make</a>, <a href="/flowise-vs-n8n">Flowise vs n8n</a>, and
+        the rising query <a href="/openclaw-vs-n8n">OpenClaw vs n8n</a>. We tell you when n8n is the
+        wrong choice, not just when it is the right one.
+      </p>
+
+      <h2>Who runs this site</h2>
+      <p>
+        n8n.gjam.in is an independent publisher based in India. We are not affiliated with n8n GmbH;
+        we just happen to ship a lot of n8n in production for clients and want to share the
+        templates we build internally. Read more on the <a href="/about">about page</a>.
+      </p>
+
+      <h2>How to use a workflow</h2>
+      <ol>
+        <li>Browse the <a href="/workflows">workflow library</a> or pick a category.</li>
+        <li>Click <strong>Download</strong> on the workflow page (no signup).</li>
+        <li>Open your n8n instance — <a href="/n8n-cloud">Cloud</a> or
+          <a href="/n8n-self-host">self-hosted</a>.</li>
+        <li>Workflows → <strong>Import from File</strong> → select the downloaded JSON or ZIP.</li>
+        <li>Connect credentials for any nodes that require them.</li>
+        <li>Test with manual execution, then activate triggers.</li>
+      </ol>
+
+      <h2>Stay updated</h2>
+      <p>
+        New workflows ship continuously. Subscribe via the
+        <a href="/rss.xml">RSS feed</a> or follow our updates on the
+        <a href="/workflows">workflows index</a> — sorted by newest first.
+      </p>
+    </div>
   </section>
 </BaseLayout>

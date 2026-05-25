@@ -6,46 +6,133 @@ import { getAllWorkflows } from '../lib/workflows';
 const workflows = await getAllWorkflows();
 const faqs = [
   {
-    question: 'What is the n8n GitHub repo?',
-    answer: 'https://github.com/n8n-io/n8n — main monorepo for the editor, core, and community nodes.',
+    question: 'Where is the n8n GitHub repository?',
+    answer:
+      'The main n8n monorepo lives at github.com/n8n-io/n8n. It contains the editor, the core engine, hundreds of integration nodes, and the documentation source.',
   },
   {
-    question: 'n8n workflow github — where to find templates?',
-    answer: 'Official community gallery, GitHub gists, and curated packs like n8n.gjam.in with direct JSON/ZIP download.',
+    question: 'Is n8n on GitHub fully open source?',
+    answer:
+      'n8n uses a fair-code license called Sustainable Use License. The source is fully readable and you can self-host, but commercial redistribution as a hosted service has restrictions. It is not OSI-certified open source.',
+  },
+  {
+    question: 'Can I find n8n workflows on GitHub?',
+    answer:
+      'Yes. Many builders publish workflow JSON in personal repos, gists, and curated lists. n8n.gjam.in is a curated alternative with consistent metadata and tested imports.',
+  },
+  {
+    question: 'How do I contribute to n8n?',
+    answer:
+      'Read CONTRIBUTING.md in the main repo. Most contributions are integration nodes, documentation, or bug fixes. Build a community node first if you are new — it is the gentlest entry point.',
   },
 ];
 ---
 
 <GuideLayout
-  title="n8n GitHub — Repo, Workflows & Community"
-  description="n8n github and github n8n resources: main repo, contributing, workflow JSON from GitHub-style searches, and free templates (+30% trend)."
+  title="n8n GitHub — Repo, Workflows, Contributing"
+  description="n8n GitHub guide: main repo, fair-code license, community nodes, workflow JSON discovery, and contribution path. Rising +30% search trend worldwide."
   path="/n8n-github"
   breadcrumbs={[
     { name: 'Home', path: '/' },
     { name: 'n8n GitHub', path: '/n8n-github' },
   ]}
   faqs={faqs}
+  datePublished="2025-05-01"
 >
   <p>
-    <strong>n8n github</strong> and <strong>github n8n</strong> (+30%) reflect developers looking for
-    source code, issues, and importable workflow JSON — not just marketing pages.
+    <strong>n8n github</strong> and <strong>github n8n</strong> queries surged +30% recently. The
+    audience is split between developers wanting the source code and operators searching for
+    importable workflow JSON. This page covers both.
   </p>
 
-  <h2>Main repository</h2>
+  <h2>The official repository</h2>
   <p>
     <a href="https://github.com/n8n-io/n8n" rel="noopener noreferrer" target="_blank">github.com/n8n-io/n8n</a>
-    — star the repo, read CONTRIBUTING.md, and track releases for breaking changes before upgrading Docker tags.
+    is the monorepo for the entire platform. Notable directories:
+  </p>
+  <ul>
+    <li><code>packages/cli</code> — the runnable n8n server.</li>
+    <li><code>packages/editor-ui</code> — the Vue-based workflow editor.</li>
+    <li><code>packages/nodes-base</code> — the giant collection of built-in integration nodes.</li>
+    <li><code>packages/@n8n/nodes-langchain</code> — AI agent and LangChain nodes.</li>
+    <li><code>docs</code> — source for the docs.n8n.io site.</li>
+  </ul>
+
+  <h2>License: what fair-code actually means</h2>
+  <p>
+    n8n is licensed under the <strong>Sustainable Use License</strong> — a fair-code license. In
+    practical terms:
+  </p>
+  <ul>
+    <li>You can read the source, fork it, and self-host for personal or internal business use.</li>
+    <li>You can extend it with custom nodes and modify the editor for your team.</li>
+    <li>You <em>cannot</em> resell n8n as a hosted automation service competing with n8n Cloud.</li>
+  </ul>
+  <p>
+    For nearly every user this is functionally indistinguishable from open source. The only people
+    who run into the limitation are companies trying to build a Zapier-style competitor on top of
+    n8n's codebase.
   </p>
 
-  <h2>n8n workflow github pattern</h2>
-  <p>Many teams store exported JSON in private repos. Workflow:</p>
+  <h2>Releases and version pinning</h2>
+  <p>
+    Watch the <a href="https://github.com/n8n-io/n8n/releases" rel="noopener noreferrer" target="_blank">releases page</a>
+    before upgrading production. Major versions occasionally include database migrations or breaking
+    changes to node behavior. Always:
+  </p>
   <ol>
-    <li>Export from n8n UI</li>
-    <li>Commit to Git with secrets stripped</li>
-    <li>CI deploys to staging n8n via API</li>
+    <li>Read the release notes for breaking changes.</li>
+    <li>Pin your Docker image tag (e.g. <code>n8nio/n8n:1.79.0</code>, not <code>latest</code>).</li>
+    <li>Test the upgrade on a staging instance with a snapshot of your prod volume.</li>
+    <li>Upgrade prod during a low-traffic window.</li>
   </ol>
-  <p>Or skip the hunt — download verified templates below (n8n workflow github alternative).</p>
 
-  <h2>Free workflow packs</h2>
+  <h2>Community nodes on GitHub</h2>
+  <p>
+    The community publishes hundreds of additional nodes as npm packages. Discover them by searching
+    GitHub for <code>n8n-nodes-*</code>. Examples worth knowing:
+  </p>
+  <ul>
+    <li>Vector DB nodes (Qdrant, Pinecone, Weaviate)</li>
+    <li>India-specific integrations (Razorpay, Paytm, Karix SMS)</li>
+    <li>Niche scrapers and CRM connectors</li>
+  </ul>
+  <p>
+    Community nodes work on self-host. They are limited or unavailable on n8n Cloud — another point
+    in favor of <a href="/n8n-self-host">self-hosting</a> for heavy customization.
+  </p>
+
+  <h2>The "n8n workflow github" pattern</h2>
+  <p>
+    Many teams keep workflow JSON in a Git repository:
+  </p>
+  <ol>
+    <li>Build and test a workflow in n8n's editor.</li>
+    <li>Export as JSON.</li>
+    <li>Strip credentials and commit to a private repo.</li>
+    <li>CI deploys to staging n8n via the <a href="/n8n-api">n8n API</a> on merge.</li>
+    <li>Tag releases for promotion to prod.</li>
+  </ol>
+  <p>
+    This is the same pattern that gave rise to "workflow github" searches. If you don't want to roll
+    your own repo, our <a href="/workflows">curated library</a> serves the same purpose for common
+    use cases.
+  </p>
+
+  <h2>Issues and bug reports</h2>
+  <p>
+    Before filing an issue on the n8n repo, check:
+  </p>
+  <ul>
+    <li>You are on the latest minor version.</li>
+    <li>The bug is reproducible with credentials stripped (so maintainers can reproduce).</li>
+    <li>An existing issue does not already cover it.</li>
+  </ul>
+  <p>
+    Good bug reports include n8n version, Node version, Docker tag, full stack trace, and a minimal
+    workflow JSON that reproduces the issue.
+  </p>
+
+  <h2>Curated free workflows</h2>
   <WorkflowGrid workflows={workflows} />
 </GuideLayout>
