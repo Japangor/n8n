@@ -5,56 +5,178 @@ const faqs = [
   {
     question: 'How much does n8n cost?',
     answer:
-      'Self-hosted software has no license fee under fair-code terms. n8n Cloud pricing is per-workflow execution tiers — check n8n.io/pricing for current numbers.',
+      'Self-hosted n8n has no license fee under its fair-code terms — you pay only for your VPS and API calls. n8n Cloud is tiered subscription pricing based on monthly executions and team seats. Free workflow templates on n8n.gjam.in cost nothing.',
   },
   {
-    question: 'Is n8n pricing cheaper than Zapier?',
-    answer: 'Often yes at scale on self-host because you pay infrastructure, not per-task SaaS markup.',
+    question: 'Is n8n cheaper than Zapier?',
+    answer:
+      'At scale, yes — usually by an order of magnitude. Zapier charges per-task; a single AI-heavy workflow that runs hourly can burn through a Pro plan in days. Self-hosted n8n on a $5 VPS handles thousands of executions per day with no incremental cost.',
   },
   {
-    question: 'n8n price vs n8n pricing?',
-    answer: 'Same topic — Cloud subscription tiers and optional enterprise support.',
+    question: 'What is n8n Cloud pricing?',
+    answer:
+      'n8n Cloud has a free trial plus paid tiers. Pricing changes periodically — always check n8n.io/pricing for live numbers. Plans differ by monthly executions, concurrent runners, and team features.',
+  },
+  {
+    question: 'Hidden costs I should plan for?',
+    answer:
+      'Three categories: LLM tokens (OpenAI, Anthropic), data services (Apify actors, scraper APIs), and email sending (Gmail limits, SMTP cost). These usually dwarf the n8n bill itself once AI agents go live.',
   },
 ];
 ---
 
 <GuideLayout
-  title="n8n Pricing & Cost Guide (2025)"
-  description="Understand n8n pricing, n8n price, and n8n Cloud tiers vs free self-host. Compare total cost with Zapier and Make."
+  title="n8n Pricing 2025 — Cost Breakdown & Comparisons"
+  description="Complete n8n pricing guide for 2025. Self-host costs, n8n Cloud tiers, total cost of ownership versus Zapier and Make, and hidden costs (LLM tokens, APIs)."
   path="/n8n-pricing"
   breadcrumbs={[
     { name: 'Home', path: '/' },
     { name: 'n8n Pricing', path: '/n8n-pricing' },
   ]}
   faqs={faqs}
+  datePublished="2025-05-01"
 >
   <p>
-    <strong>n8n pricing</strong> searches are steady worldwide (+20% recent week). Teams evaluate
-    Cloud vs self-host before migrating from Zapier.
+    <strong>n8n pricing</strong> and <strong>n8n price</strong> searches are climbing (+20% in the
+    last week) as more teams evaluate alternatives to Zapier and Make. This page is the practical
+    cost guide we wish we had when we migrated our agency off SaaS automation tools.
   </p>
 
-  <h2>Self-hosted: software cost</h2>
+  <h2>The two ways to pay for n8n</h2>
+  <ol>
+    <li>
+      <strong>Self-host</strong> — software is free under fair-code; you pay infrastructure.
+    </li>
+    <li>
+      <strong>n8n Cloud</strong> — managed service with tiered subscription pricing.
+    </li>
+  </ol>
   <p>
-    The n8n application itself has no per-seat license when you self-host. Your bill is VPS + APIs
-    (OpenAI, Apify, email tools). Templates on this site remain <a href="/free-n8n-workflows">free</a>.
+    Both work. The right choice depends on your engineering capacity, execution volume, and
+    compliance needs. Most agencies start on Cloud, then migrate to self-host once executions cross
+    a threshold.
   </p>
 
-  <h2>n8n Cloud</h2>
+  <h2>Self-hosted: total cost breakdown</h2>
   <p>
-    Managed hosting charges by plan and execution volume. Good for agencies prototyping fast. See
-    <a href="/n8n-cloud">n8n Cloud overview</a> and official pricing page for live numbers.
+    Real numbers from a 30-workflow agency setup we maintain:
+  </p>
+  <table>
+    <thead>
+      <tr>
+        <th>Cost item</th>
+        <th>Monthly</th>
+        <th>Notes</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Hetzner CX22 VPS (4 GB RAM)</td>
+        <td>~$5</td>
+        <td>Handles ~3,000 executions/day comfortably</td>
+      </tr>
+      <tr>
+        <td>Backups to Backblaze B2</td>
+        <td>~$1</td>
+        <td>Nightly rsync of <code>n8n_data</code> volume</td>
+      </tr>
+      <tr>
+        <td>Cloudflare (DNS + WAF)</td>
+        <td>$0</td>
+        <td>Free tier is more than enough</td>
+      </tr>
+      <tr>
+        <td>Domain</td>
+        <td>~$1</td>
+        <td>$10–15/year amortized</td>
+      </tr>
+      <tr>
+        <td><strong>Subtotal</strong></td>
+        <td><strong>~$7</strong></td>
+        <td>Before APIs and LLM costs</td>
+      </tr>
+    </tbody>
+  </table>
+  <p>
+    See our <a href="/n8n-self-host">self-host guide</a> for the exact setup that produces these
+    numbers.
   </p>
 
-  <h2>Hidden costs to plan for</h2>
+  <h2>n8n Cloud: when the subscription pays off</h2>
+  <p>
+    Cloud pricing is per-plan rather than per-task. Practical thresholds we have seen:
+  </p>
   <ul>
-    <li>LLM token usage on AI agent workflows</li>
-    <li>Scraper actors (Apify) on lead-gen flows</li>
-    <li>Engineer time maintaining Docker upgrades</li>
+    <li>
+      <strong>Under 50 active workflows, light AI use:</strong> Cloud Starter tier is usually
+      sufficient. Cost of zero ops outweighs the subscription.
+    </li>
+    <li>
+      <strong>50–200 workflows, daily AI agents:</strong> Cloud Pro tier; still cheaper than
+      managing your own infrastructure if you don't have a dedicated ops person.
+    </li>
+    <li>
+      <strong>200+ workflows, multiple AI agents per minute:</strong> Self-host wins on raw cost,
+      assuming you have someone to maintain it.
+    </li>
   </ul>
+  <p>See <a href="/n8n-cloud">n8n Cloud overview</a> for feature differences.</p>
 
-  <h2>Comparisons</h2>
-  <ul>
-    <li><a href="/n8n-vs-zapier">n8n vs Zapier pricing logic</a></li>
-    <li><a href="/n8n-vs-make">n8n vs Make</a></li>
-  </ul>
+  <h2>Hidden costs that beat the n8n bill</h2>
+  <h3>LLM tokens</h3>
+  <p>
+    A single AI agent workflow with retrieval and tool calls can spend $0.05–$0.30 per execution.
+    Multiply by execution frequency. Always set a budget alert in your OpenAI or Anthropic
+    dashboard.
+  </p>
+  <h3>Scraping APIs</h3>
+  <p>
+    Apify actors and similar paid scrapers charge per result. A 10,000-lead scrape can cost $20–$200
+    depending on enrichment depth. Our <a href="/workflows/lead-gen-apify">Lead Gen Apify</a>
+    workflow includes notes on cost control.
+  </p>
+  <h3>Email sending</h3>
+  <p>
+    Gmail SMTP works for under 500 emails/day. Above that, expect to pay for SendGrid, Mailgun,
+    Amazon SES, or a dedicated cold email tool. $10–$50/month is typical for cold outreach.
+  </p>
+  <h3>Telephony</h3>
+  <p>
+    <a href="/workflows/voice-agent">Voice agent</a> workflows incur Twilio or similar per-minute
+    charges plus TTS/STT API costs. Budget at least $50/month for a small-scale voice deployment.
+  </p>
+
+  <h2>n8n pricing vs Zapier</h2>
+  <p>
+    Zapier charges per <em>task</em> — each filter, each action, each step. A 12-step Zap that runs
+    every 5 minutes burns 17,280 tasks per day. On Zapier Pro that's already at the limit; on
+    Starter it's not even possible.
+  </p>
+  <p>
+    The same workflow on self-hosted n8n: zero incremental cost. On n8n Cloud: counts as one
+    execution per trigger.
+  </p>
+  <p>See <a href="/n8n-vs-zapier">n8n vs Zapier</a> for the full comparison.</p>
+
+  <h2>n8n pricing vs Make</h2>
+  <p>
+    Make charges per <em>operation</em> — similar problem to Zapier's task model, slightly more
+    generous quotas. Crossover point where n8n self-host wins: roughly 5,000–10,000 operations per
+    month for an active agency.
+  </p>
+  <p>See <a href="/n8n-vs-make">n8n vs Make</a>.</p>
+
+  <h2>Decision flowchart</h2>
+  <ol>
+    <li>Do you have anyone comfortable with Docker and a Linux VPS? If <strong>no</strong> → n8n Cloud.</li>
+    <li>Do you need data residency (India DPDP, EU GDPR)? If <strong>yes</strong> → Self-host in your region.</li>
+    <li>Do you expect more than ~5,000 executions per month? If <strong>yes</strong> → Self-host saves money.</li>
+    <li>Otherwise, start with Cloud, migrate when growth justifies it.</li>
+  </ol>
+
+  <h2>Free no matter what you pick</h2>
+  <p>
+    Every <a href="/workflows">workflow on n8n.gjam.in</a> is free to download and works on both
+    Cloud and self-hosted instances. Pricing only affects which n8n you import them into.
+  </p>
 </GuideLayout>

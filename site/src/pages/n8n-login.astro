@@ -3,45 +3,134 @@ import GuideLayout from '../layouts/GuideLayout.astro';
 
 const faqs = [
   {
-    question: 'Where do I n8n login?',
-    answer: 'Cloud users: https://app.n8n.cloud — Self-hosted: your own domain on port 5678 (e.g. https://n8n.yourcompany.com).',
+    question: 'Where do I log into n8n Cloud?',
+    answer:
+      'Go to https://app.n8n.cloud and sign in with the email you registered. After login you land on your workflow dashboard.',
   },
   {
-    question: 'Forgot n8n password on self-host?',
-    answer: 'Use CLI user management documented on docs.n8n.io or reset via environment variables on fresh installs.',
+    question: 'I forgot my n8n Cloud password — what now?',
+    answer:
+      'Use the "Forgot password" link on the login screen. A reset email arrives within a minute. If it does not, check spam, then contact n8n Cloud support from the same email.',
+  },
+  {
+    question: 'Where do I log into self-hosted n8n?',
+    answer:
+      'Your own URL, typically https://n8n.yourdomain.com or http://localhost:5678 in dev. The first visitor to a fresh self-host instance creates the owner account.',
+  },
+  {
+    question: 'Can I enable 2FA on n8n login?',
+    answer:
+      'Cloud paid plans support 2FA in account settings. Self-hosted n8n supports basic auth and an external proxy for additional factors.',
+  },
+  {
+    question: 'My self-hosted n8n login is locked — how do I recover?',
+    answer:
+      'For owner accounts, use the n8n CLI to reset the password via SSH into your server. Documentation: docs.n8n.io/hosting/cli-commands.',
   },
 ];
 ---
 
 <GuideLayout
-  title="n8n Login — Cloud & Self-Hosted Access"
-  description="n8n login help for Cloud (app.n8n.cloud) and self-hosted instances. +30% search trend in India for n8n login."
+  title="n8n Login — Cloud, Self-Host & 2FA Guide"
+  description="How to log into n8n Cloud and self-hosted n8n instances. Password reset, 2FA, SSO on enterprise plans, and troubleshooting common login errors. +30% trend in India."
   path="/n8n-login"
   breadcrumbs={[
     { name: 'Home', path: '/' },
     { name: 'n8n Login', path: '/n8n-login' },
   ]}
   faqs={faqs}
+  datePublished="2025-05-01"
 >
-  <p><strong>n8n login</strong> depends on how you deploy:</p>
+  <p>
+    <strong>n8n login</strong> searches rose +30% in India as more teams onboard. Where you sign in
+    depends on which n8n you run: Cloud, your own self-hosted instance, or a partner-hosted setup.
+    This page covers all three plus the common login problems.
+  </p>
 
   <h2>n8n Cloud login</h2>
   <ol>
-    <li>Go to <a href="https://app.n8n.cloud" rel="noopener noreferrer" target="_blank">app.n8n.cloud</a></li>
-    <li>Sign in with email or SSO (business plans)</li>
-    <li>Open <strong>Workflows</strong> and import from <a href="/workflows">n8n.gjam.in</a></li>
+    <li>
+      Visit <a href="https://app.n8n.cloud" rel="noopener noreferrer" target="_blank">app.n8n.cloud</a>
+    </li>
+    <li>Enter the email you signed up with and your password.</li>
+    <li>Approve the 2FA prompt if you enabled it.</li>
+    <li>You land on your workflows dashboard.</li>
   </ol>
-
-  <h2>Self-hosted login</h2>
   <p>
-    First visitor to a fresh instance creates the owner account. Use HTTPS in production. Setup via
-    <a href="/n8n-docker">Docker</a>.
+    If you cannot remember which workspace email you used, search "n8n welcome" in your inbox —
+    the original signup email lists the workspace subdomain.
   </p>
 
-  <h2>Security tips</h2>
+  <h2>Self-hosted n8n login</h2>
+  <p>
+    For self-hosted instances the URL is whatever you configured during
+    <a href="/n8n-docker">Docker setup</a>. Typical examples:
+  </p>
   <ul>
-    <li>Enable 2FA where available</li>
-    <li>Do not expose port 5678 publicly without auth + TLS</li>
-    <li>Rotate API keys used in workflows regularly</li>
+    <li><code>https://n8n.yourcompany.com</code> — production with TLS</li>
+    <li><code>http://localhost:5678</code> — local development</li>
+    <li><code>http://your-server-ip:5678</code> — initial install, before adding HTTPS</li>
+  </ul>
+  <p>
+    <strong>First-time login on a fresh instance</strong>: the very first browser visit creates the
+    owner account. Use a strong password and store it in your team password manager immediately.
+  </p>
+
+  <h2>Forgot password</h2>
+  <h3>n8n Cloud</h3>
+  <ol>
+    <li>Click "Forgot password" on the login screen.</li>
+    <li>Enter your registered email.</li>
+    <li>Open the reset email (check spam if it does not arrive in 2 minutes).</li>
+    <li>Set a new password and store it in a password manager.</li>
+  </ol>
+  <h3>Self-hosted</h3>
+  <p>
+    Self-hosted n8n does not have a built-in "forgot password" email flow by default. Reset via CLI
+    by SSHing into your server and running n8n's user-management command. Detailed steps:
+    <a href="https://docs.n8n.io/hosting/cli-commands/" rel="noopener noreferrer" target="_blank">docs.n8n.io CLI reference</a>.
+  </p>
+
+  <h2>SSO and team login</h2>
+  <p>
+    Enterprise n8n Cloud and self-hosted plans support SAML and OIDC SSO. Typical providers tested
+    in the wild include Google Workspace, Okta, Azure AD, and JumpCloud. If your team uses SSO,
+    use the SSO button on the login screen — not the email-password fields.
+  </p>
+
+  <h2>Common login errors</h2>
+  <ul>
+    <li>
+      <strong>"Invalid credentials"</strong> on Cloud — check you are using the right workspace
+      subdomain.
+    </li>
+    <li>
+      <strong>Endless redirect loop</strong> on self-host — usually a misconfigured
+      <code>WEBHOOK_URL</code> or reverse proxy header. Verify your <code>X-Forwarded-Proto</code>.
+    </li>
+    <li>
+      <strong>Mixed-content warnings</strong> — your reverse proxy is serving the editor over HTTPS
+      but n8n thinks it is HTTP. Set <code>N8N_PROTOCOL=https</code>.
+    </li>
+    <li>
+      <strong>2FA code rejected</strong> — server clock drift. Sync NTP on the n8n host.
+    </li>
+  </ul>
+
+  <h2>Security after login</h2>
+  <ul>
+    <li>Enable 2FA on Cloud paid plans immediately.</li>
+    <li>For self-host, put n8n behind Cloudflare Access or Tailscale for extra defense.</li>
+    <li>Rotate API keys quarterly — see our <a href="/n8n-api">API guide</a>.</li>
+    <li>Audit user list monthly on team plans.</li>
+  </ul>
+
+  <h2>After you log in</h2>
+  <p>Pick a starter template and have something running in 10 minutes:</p>
+  <ul>
+    <li><a href="/workflows/chat-bot">Chat Bot</a></li>
+    <li><a href="/workflows/lead-gen-apify">Lead Gen with Apify</a></li>
+    <li><a href="/workflows/voice-agent">Voice Agent</a></li>
+    <li><a href="/free-n8n-workflows">All free downloads</a></li>
   </ul>
 </GuideLayout>

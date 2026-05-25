@@ -5,47 +5,192 @@ import CodeBlock from '../components/CodeBlock.astro';
 const npmInstall = `npm install n8n -g
 n8n start`;
 
+const composeMinimal = `services:
+  n8n:
+    image: docker.n8n.io/n8nio/n8n
+    restart: always
+    ports:
+      - "5678:5678"
+    environment:
+      - N8N_HOST=n8n.yourcompany.com
+      - N8N_PROTOCOL=https
+      - WEBHOOK_URL=https://n8n.yourcompany.com/
+      - GENERIC_TIMEZONE=Asia/Kolkata
+      - TZ=Asia/Kolkata
+    volumes:
+      - n8n_data:/home/node/.n8n
+
+volumes:
+  n8n_data:`;
+
 const faqs = [
   {
-    question: 'n8n download — what are my options?',
-    answer: 'Docker (recommended), npm global install, or source build from GitHub. Docker is the most common for production.',
+    question: 'What does n8n download mean?',
+    answer:
+      'n8n is not a desktop app you download as an installer. "n8n download" usually means getting a runnable instance via Docker, npm, or source build. Docker is the most common production path.',
   },
   {
-    question: 'Self-host vs n8n Cloud?',
-    answer: 'Self-host for control and scale economics. Cloud for fastest setup without server admin.',
+    question: 'Is self-hosted n8n really free?',
+    answer:
+      'The software itself has no license fee under fair-code terms. You pay only for infrastructure (a $5–$20/month VPS works for most users) and any APIs your workflows call.',
+  },
+  {
+    question: 'Minimum server specs for self-hosted n8n?',
+    answer:
+      'Light workloads: 2 GB RAM, 1 vCPU. AI agent and scraping workloads: 4–8 GB RAM, 2 vCPUs. Always use persistent disk for the SQLite database under ~/.n8n.',
+  },
+  {
+    question: 'Self-host vs n8n Cloud — which is right?',
+    answer:
+      'Self-host wins for cost at scale, data residency, and custom nodes. Cloud wins for fast setup and zero infrastructure ops. Most agencies start on Cloud and migrate to self-host once executions grow.',
   },
 ];
 ---
 
 <GuideLayout
-  title="n8n Download & Self-Host Guide"
-  description="n8n download and self-host options: Docker, npm, requirements, and security tips. Targets n8n download and self-host searches."
+  title="n8n Download & Self-Host Guide (Docker, npm, VPS)"
+  description="Complete n8n download and self-host guide. Docker, docker compose, npm install, minimum server specs, HTTPS reverse proxy, backups, and import free templates."
   path="/n8n-self-host"
   breadcrumbs={[
     { name: 'Home', path: '/' },
     { name: 'n8n Self-Host', path: '/n8n-self-host' },
   ]}
   faqs={faqs}
+  datePublished="2025-05-01"
 >
   <p>
-    <strong>n8n download</strong> usually means getting a runnable instance — not a separate desktop app.
-    Most teams use Docker; developers sometimes use npm.
+    <strong>n8n download</strong> is a misleading query — there is no installer. What people actually
+    need is a running n8n instance. This guide covers all three legitimate paths (Docker, npm, source)
+    and gives you the production hardening checklist nobody else publishes.
   </p>
 
-  <h2>Recommended: Docker</h2>
-  <p>Follow our complete <a href="/n8n-docker">n8n Docker guide</a> with compose snippets for India timezone defaults.</p>
+  <h2>Path 1: Docker (recommended)</h2>
+  <p>
+    Docker is the path n8n GmbH officially recommends. It works on any VPS — DigitalOcean, Hetzner,
+    AWS Lightsail, Linode, Contabo. Cost: <strong>USD 5–20 per month</strong> for most workloads.
+  </p>
+  <p>Full step-by-step in our <a href="/n8n-docker">n8n Docker guide</a>. Minimal compose:</p>
+  <CodeBlock code={composeMinimal} language="yaml" />
 
-  <h2>Alternative: npm</h2>
+  <h2>Path 2: npm install</h2>
+  <p>
+    Quick for local development. Requires Node.js 22.12 or higher and a persistent home directory
+    for the SQLite database.
+  </p>
   <CodeBlock code={npmInstall} />
-  <p>Requires Node.js 18+. Better for quick local experiments than production clusters.</p>
+  <p>
+    Not recommended for production: you lose the easy upgrade story Docker gives you, and you must
+    manage process supervision (PM2, systemd) yourself.
+  </p>
 
-  <h2>Minimum requirements</h2>
+  <h2>Path 3: Build from source</h2>
+  <p>
+    Clone the <a href="/n8n-github">n8n GitHub repo</a>, run <code>pnpm install</code> and
+    <code>pnpm build</code>. Only worth doing if you are contributing back upstream or running a
+    fork. For everyone else, the Docker image is identical to what source builds produce.
+  </p>
+
+  <h2>Minimum server requirements</h2>
+  <table>
+    <thead>
+      <tr><th>Workload</th><th>RAM</th><th>vCPU</th><th>Disk</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Personal / hobby</td><td>1–2 GB</td><td>1</td><td>10 GB SSD</td></tr>
+      <tr><td>Light agency (10 workflows)</td><td>2 GB</td><td>1–2</td><td>20 GB SSD</td></tr>
+      <tr><td>Heavy agency / AI agents</td><td>4–8 GB</td><td>2–4</td><td>40 GB+ SSD</td></tr>
+      <tr><td>High concurrency, multiple runners</td><td>16 GB+</td><td>4+</td><td>100 GB+ SSD</td></tr>
+    </tbody>
+  </table>
+
+  <h2>HTTPS reverse proxy</h2>
+  <p>
+    In production you must put TLS in front of n8n. Pick one:
+  </p>
   <ul>
-    <li>2 GB RAM for light workloads; 4 GB+ for AI-heavy flows</li>
-    <li>Persistent disk for <code>~/.n8n</code> database and credentials</li>
-    <li>HTTPS reverse proxy for webhooks in production</li>
+    <li>
+      <strong>Caddy</strong> — easiest. Automatic Let's Encrypt certificates, one-line config.
+    </li>
+    <li>
+      <strong>Traefik</strong> — best for Docker stacks with multiple services.
+    </li>
+    <li>
+      <strong>Nginx</strong> — most familiar to ops engineers.
+    </li>
+    <li>
+      <strong>Cloudflare Tunnel</strong> — no open ports needed; great for home-server setups.
+    </li>
+  </ul>
+  <p>
+    Whichever you choose, ensure <code>X-Forwarded-Proto</code> is set to <code>https</code> and
+    your <code>WEBHOOK_URL</code> env matches your public URL exactly. Misconfigured headers are the
+    #1 cause of the redirect-loop login bug.
+  </p>
+
+  <h2>Backups</h2>
+  <p>
+    n8n stores everything in <code>~/.n8n</code> — workflows, credentials (encrypted), and the
+    SQLite database. Back up:
+  </p>
+  <ol>
+    <li>The volume mount (e.g. <code>n8n_data</code> in compose).</li>
+    <li>The <code>N8N_ENCRYPTION_KEY</code> environment variable — without it, restored credentials
+      are unusable.</li>
+    <li>Your reverse-proxy config and TLS certificates (or rely on Let's Encrypt's auto-renew).</li>
+  </ol>
+  <p>
+    A nightly cron that rsyncs the volume to object storage (S3, Backblaze B2, Hetzner Storage Box)
+    handles 95% of disaster recovery scenarios.
+  </p>
+
+  <h2>Upgrades</h2>
+  <p>
+    With Docker the upgrade flow is:
+  </p>
+  <ol>
+    <li><code>docker compose pull</code></li>
+    <li><code>docker compose up -d</code></li>
+    <li>Open the editor — n8n will run any database migrations automatically.</li>
+  </ol>
+  <p>
+    Always read release notes for major version bumps. Test on a staging instance with a snapshot of
+    your prod volume before upgrading critical workflows.
+  </p>
+
+  <h2>Security hardening</h2>
+  <ul>
+    <li>Set a strong <code>N8N_BASIC_AUTH_USER</code> / <code>N8N_BASIC_AUTH_PASSWORD</code> in
+      addition to the owner account.</li>
+    <li>Put Cloudflare in front and restrict the editor to your office IPs.</li>
+    <li>Disable the public API in production unless you genuinely need it
+      (<code>N8N_PUBLIC_API_DISABLED=true</code>).</li>
+    <li>Rotate <code>N8N_ENCRYPTION_KEY</code> on a known cadence — but keep the old one until you
+      have re-encrypted all credentials.</li>
+    <li>Pin your Docker image tag instead of using <code>latest</code>.</li>
   </ul>
 
-  <h2>Load free workflows</h2>
-  <p>After install, browse <a href="/free-n8n-workflows">free n8n workflows</a> and import JSON/ZIP files.</p>
+  <h2>Cost estimate</h2>
+  <p>
+    A real-world agency running ~30 active workflows with light AI usage on a 2-vCPU 4 GB VPS:
+  </p>
+  <ul>
+    <li>VPS (Hetzner CX22 or DO Premium Intel): <strong>$5–8/month</strong></li>
+    <li>Object storage backups: <strong>$1/month</strong></li>
+    <li>Cloudflare free tier in front: <strong>$0</strong></li>
+    <li>Domain: <strong>$10–15/year</strong></li>
+  </ul>
+  <p>
+    <em>Versus</em> the equivalent SaaS-only setup on Zapier or Make: typically 5–10× more once you
+    factor in per-task pricing on AI-heavy flows.
+  </p>
+
+  <h2>After install: import templates</h2>
+  <ul>
+    <li><a href="/workflows/lead-gen-systems">Lead Gen Systems</a></li>
+    <li><a href="/workflows/chat-bot">Chat Bot</a></li>
+    <li><a href="/workflows/voice-agent">Voice Agent</a></li>
+    <li><a href="/free-n8n-workflows">All free workflows</a></li>
+  </ul>
+
+  <p>Related: <a href="/n8n-docker">Docker setup</a> · <a href="/n8n-cloud">n8n Cloud comparison</a> · <a href="/n8n-pricing">Pricing math</a></p>
 </GuideLayout>

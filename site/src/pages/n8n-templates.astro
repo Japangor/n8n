@@ -7,39 +7,105 @@ const workflows = await getAllWorkflows();
 const faqs = [
   {
     question: 'What are n8n templates?',
-    answer: 'Pre-built workflow graphs you import and customize — saving hours vs building from blank canvas.',
+    answer:
+      'Pre-built workflow graphs you import and customize in n8n. Templates save hours versus building from a blank canvas because they include the node wiring, error handling, and integration scaffolding.',
   },
   {
-    question: 'n8n templates vs n8n workflows?',
-    answer: 'Same thing in practice. "Templates" emphasizes copy-paste; "workflows" emphasizes the running automation.',
+    question: 'Are n8n templates free?',
+    answer:
+      'Every template on n8n.gjam.in is free. The official n8n template hub is also free. Some marketplaces (and YouTube creators) sell premium template packs — most use cases are well covered by free options.',
+  },
+  {
+    question: 'How do I import an n8n template?',
+    answer:
+      'Download the JSON or ZIP from the template page. In your n8n instance go to Workflows → Import from File and select the downloaded file. Connect credentials, run manually once, then activate triggers.',
+  },
+  {
+    question: 'Can I sell workflows built from these templates?',
+    answer:
+      'You can deliver client work using modified versions of our templates. You cannot resell the unmodified JSON files as a paid template product — see our Terms of Use.',
   },
 ];
 ---
 
 <GuideLayout
   title="n8n Templates — Free Downloadable Workflows"
-  description="Free n8n templates for AI agents, lead gen, email, and social media. Targets n8n templates (+20% worldwide)."
+  description="Free n8n templates for AI agents, lead gen, cold email, voice agents, video pipelines, and social media. JSON and ZIP imports for Cloud and self-host. +20% worldwide."
   path="/n8n-templates"
   breadcrumbs={[
     { name: 'Home', path: '/' },
     { name: 'n8n Templates', path: '/n8n-templates' },
   ]}
   faqs={faqs}
+  datePublished="2025-05-01"
 >
   <p>
-    <strong>n8n templates</strong> (+20%) are the fastest way to ship automation. Each template here
-    includes a description, integration list, and one-click download.
+    <strong>n8n templates</strong> is one of the fastest-growing automation queries (+20%
+    worldwide). The term overlaps with <strong>n8n workflows</strong> — both refer to importable,
+    pre-built automations. We use "templates" for stripped-of-credentials starter graphs and
+    "workflows" for the running thing inside your n8n instance.
   </p>
 
-  <h2>Template categories</h2>
+  <h2>What makes a good n8n template</h2>
   <ul>
-    <li><a href="/categories/ai-agents">AI Agents</a></li>
-    <li><a href="/categories/lead-gen">Lead Generation</a></li>
-    <li><a href="/categories/email">Email & Outreach</a></li>
-    <li><a href="/categories/video">Video & Avatar</a></li>
-    <li><a href="/categories/social-media">Social Media</a></li>
+    <li>
+      <strong>Clear input contract.</strong> The trigger node and its expected payload are
+      documented.
+    </li>
+    <li>
+      <strong>Credential placeholders.</strong> No hardcoded API keys; every credential node is
+      flagged on import.
+    </li>
+    <li>
+      <strong>Error handling.</strong> At least one explicit error workflow or retry branch.
+    </li>
+    <li>
+      <strong>Comments inside the workflow.</strong> Sticky notes explaining non-obvious branches.
+    </li>
+    <li>
+      <strong>Idempotency where possible.</strong> Re-running should not double-send emails or
+      double-charge.
+    </li>
   </ul>
 
-  <h2>All templates</h2>
+  <h2>Template categories on n8n.gjam.in</h2>
+  <ul>
+    <li><a href="/categories/ai-agents">AI Agents</a> — LLM + tool-calling workflows</li>
+    <li><a href="/categories/lead-gen">Lead Generation</a> — Apify, LinkedIn scrape, enrichment</li>
+    <li><a href="/categories/email">Email & Outreach</a> — cold email, newsletters, Loom-style</li>
+    <li><a href="/categories/video">Video & Avatar</a> — HeyGen, ElevenLabs, Veo pipelines</li>
+    <li><a href="/categories/voice">Voice Agents</a> — call automation and TTS</li>
+    <li><a href="/categories/social-media">Social Media</a> — IG/FB sales, multi-channel posting</li>
+    <li><a href="/categories/onboarding">Onboarding</a> — premium client welcome flows</li>
+    <li><a href="/categories/chat">Chat Bots</a> — support and lead qualification</li>
+  </ul>
+
+  <h2>How to use a template safely in production</h2>
+  <ol>
+    <li>Import into a staging n8n instance first.</li>
+    <li>Connect <em>sandbox</em> credentials, not production keys.</li>
+    <li>Run manually with sample data — verify each node's output.</li>
+    <li>Stress-test edge cases (empty payload, malformed input, API error responses).</li>
+    <li>Add monitoring: at minimum, an error workflow that posts failures to Slack or email.</li>
+    <li>Promote the workflow to production via the <a href="/n8n-api">n8n API</a> or export/import.</li>
+    <li>Activate triggers and watch the first 24 hours of executions closely.</li>
+  </ol>
+
+  <h2>Template vs workflow vs scenario — what to call it</h2>
+  <p>
+    The vocabulary differs slightly across tools:
+  </p>
+  <ul>
+    <li><strong>n8n</strong>: "workflow" (running) and "template" (starter export)</li>
+    <li><strong>Zapier</strong>: "Zap" and "Zap template"</li>
+    <li><strong>Make</strong>: "scenario" and "scenario template"</li>
+  </ul>
+  <p>
+    If you are migrating, see <a href="/n8n-vs-zapier">n8n vs Zapier</a> and
+    <a href="/n8n-vs-make">n8n vs Make</a>.
+  </p>
+
+  <h2>All free templates</h2>
+  <p>Sorted by date added; newest first.</p>
   <WorkflowGrid workflows={workflows} />
 </GuideLayout>

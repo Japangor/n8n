@@ -2,52 +2,145 @@
 import GuideLayout from '../layouts/GuideLayout.astro';
 import CodeBlock from '../components/CodeBlock.astro';
 
-const apiExample = `curl -X GET 'https://your-n8n.example.com/api/v1/workflows' \\
+const listExample = `curl -X GET 'https://your-n8n.example.com/api/v1/workflows' \\
+  -H 'X-N8N-API-KEY: your_api_key_here' \\
+  -H 'accept: application/json'`;
+
+const createExample = `curl -X POST 'https://your-n8n.example.com/api/v1/workflows' \\
+  -H 'X-N8N-API-KEY: your_api_key_here' \\
+  -H 'Content-Type: application/json' \\
+  -d @./my-workflow.json`;
+
+const executionExample = `curl -X GET 'https://your-n8n.example.com/api/v1/executions?limit=10&status=error' \\
   -H 'X-N8N-API-KEY: your_api_key_here'`;
 
 const faqs = [
   {
     question: 'Does n8n have a REST API?',
-    answer: 'Yes. Enable public API in settings, create an API key, then manage workflows and executions programmatically.',
+    answer:
+      'Yes. Enable the public API in settings, generate an API key, and you can list, create, update, delete, and activate workflows programmatically. You can also query executions and credentials metadata.',
   },
   {
-    question: 'n8n api vs webhooks?',
-    answer: 'API is for admin/automation of n8n itself. Webhooks are triggers inside workflows receiving external events.',
+    question: 'What is the difference between the n8n API and webhooks?',
+    answer:
+      'The API manages n8n itself — workflows, credentials, executions. Webhooks are triggers inside a workflow that receive external events. Different layers, different jobs.',
+  },
+  {
+    question: 'Can I use the n8n API on n8n Cloud?',
+    answer:
+      'Yes, on plans that include API access. Generate an API key in Settings → API. Self-hosted has API access on all editions when the public API is enabled.',
+  },
+  {
+    question: 'Is the n8n API rate-limited?',
+    answer:
+      'Cloud applies rate limits per plan. Self-host enforces no rate limit by default — you are limited by your server resources. Add Nginx or Cloudflare in front for protection.',
   },
 ];
 ---
 
 <GuideLayout
-  title="n8n API — REST Reference & Examples"
-  description="n8n api guide: authentication, list workflows, trigger executions. For developers searching n8n api (+6% worldwide)."
+  title="n8n API — REST Reference, Auth, Examples"
+  description="Complete n8n REST API guide: enable the public API, generate API keys, list and create workflows, query executions, and integrate with CI/CD. Rising +6% worldwide."
   path="/n8n-api"
   breadcrumbs={[
     { name: 'Home', path: '/' },
     { name: 'n8n API', path: '/n8n-api' },
   ]}
   faqs={faqs}
+  datePublished="2025-05-01"
 >
   <p>
-    The <strong>n8n api</strong> lets you treat n8n as infrastructure — deploy workflows from CI, sync
-    with Git, or build internal developer portals.
+    The <strong>n8n api</strong> lets you treat n8n as deployable infrastructure — promote workflows
+    from staging to production, snapshot executions for analytics, or seed new tenant instances with
+    starter templates. Search interest is up +6% worldwide as more teams adopt GitOps for
+    automations.
   </p>
 
-  <h2>Enable the API</h2>
-  <ol>
-    <li>Settings → API → Create API key</li>
-    <li>Store key in your secrets manager</li>
-    <li>Use HTTPS only</li>
-  </ol>
+  <h2>Enable the public API</h2>
+  <h3>n8n Cloud</h3>
+  <p>API access is enabled on plans that include it. Generate a key in <strong>Settings → API</strong>.</p>
+  <h3>Self-hosted</h3>
+  <p>
+    Set environment variables to enable the API and configure JWT:
+  </p>
+  <CodeBlock
+    code={`N8N_PUBLIC_API_DISABLED=false
+N8N_PUBLIC_API_ENDPOINT=api
+N8N_PUBLIC_API_SWAGGERUI_DISABLED=false`}
+    language="bash"
+  />
+  <p>
+    Restart the container. The Swagger UI is then available at
+    <code>https://your-n8n.example.com/api/v1/docs</code>.
+  </p>
+
+  <h2>Authentication</h2>
+  <p>
+    All API requests authenticate with the <code>X-N8N-API-KEY</code> header. Store the key in your
+    secrets manager (Doppler, Vault, GitHub Actions secrets) — never commit it to Git.
+  </p>
 
   <h2>List workflows</h2>
-  <CodeBlock code={apiExample} />
+  <CodeBlock code={listExample} />
 
-  <h2>Common use cases</h2>
+  <h2>Create a workflow from a JSON file</h2>
+  <CodeBlock code={createExample} />
+  <p>
+    This is exactly how the <a href="/workflows">workflows on this site</a> can be pushed to your
+    instance via CI — download the JSON, post it to your API, done.
+  </p>
+
+  <h2>Inspect failed executions</h2>
+  <CodeBlock code={executionExample} />
+  <p>
+    Wire this to your monitoring stack (Grafana, Datadog, PagerDuty) to alert on workflow failures
+    without paying for n8n's own enterprise observability.
+  </p>
+
+  <h2>Real-world API use cases</h2>
   <ul>
-    <li>Promote workflow JSON from staging to production</li>
-    <li>Monitor failed executions from PagerDuty</li>
-    <li>Seed new tenant instances with <a href="/workflows">template packs</a></li>
+    <li>
+      <strong>GitOps for automations.</strong> Commit workflow JSON to a repo; a CI job posts to the
+      API on merge to main.
+    </li>
+    <li>
+      <strong>Multi-tenant seeding.</strong> When you onboard a new agency client, run a script that
+      seeds 12 starter workflows from your template repo into their fresh n8n instance.
+    </li>
+    <li>
+      <strong>Backup and restore.</strong> Nightly job lists all workflows, dumps them to object
+      storage with checksums.
+    </li>
+    <li>
+      <strong>Bulk operations.</strong> Pause every workflow tagged <code>prospecting</code> during
+      a Black Friday code freeze.
+    </li>
+    <li>
+      <strong>Custom internal UI.</strong> Build a React or Astro dashboard showing live execution
+      status across your fleet.
+    </li>
   </ul>
 
-  <p>Official reference: <a href="https://docs.n8n.io/api/" rel="noopener noreferrer" target="_blank">docs.n8n.io/api</a></p>
+  <h2>API key safety checklist</h2>
+  <ul>
+    <li>Rotate keys at least quarterly.</li>
+    <li>Limit which IPs can reach <code>/api</code> via Cloudflare WAF rules.</li>
+    <li>Never enable Swagger UI in production-facing instances (set the disabled var to true).</li>
+    <li>Audit who has access to your secrets manager every quarter.</li>
+  </ul>
+
+  <h2>SDKs and client libraries</h2>
+  <p>
+    There is no official multi-language SDK; the API is small enough that <code>fetch</code> or
+    <code>curl</code> in your favorite language suffices. The OpenAPI spec served from the Swagger
+    endpoint can be fed to <code>openapi-generator</code> if you want a typed client.
+  </p>
+
+  <h2>Further reading</h2>
+  <ul>
+    <li>Official reference: <a href="https://docs.n8n.io/api/" rel="noopener noreferrer" target="_blank">docs.n8n.io/api</a></li>
+    <li><a href="/n8n-github">n8n GitHub repo</a></li>
+    <li><a href="/n8n-docker">Docker setup with API enabled</a></li>
+    <li><a href="/workflows">Free workflows to seed via API</a></li>
+  </ul>
 </GuideLayout>
