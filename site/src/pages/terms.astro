@@ -1,0 +1,127 @@
+---
+import GuideLayout from '../layouts/GuideLayout.astro';
+import { SITE } from '../lib/site';
+
+const lastUpdated = 'May 25, 2026';
+---
+
+<GuideLayout
+  title="Terms of Use"
+  description="Terms of use for n8n.gjam.in. License for free workflow downloads, acceptable use, disclaimers, intellectual property, and governing law (India)."
+  path="/terms"
+  breadcrumbs={[
+    { name: 'Home', path: '/' },
+    { name: 'Terms', path: '/terms' },
+  ]}
+  datePublished="2025-01-01"
+>
+  <p><em>Last updated: {lastUpdated}</em></p>
+
+  <p>
+    These Terms of Use ("Terms") govern your access to and use of <strong>{SITE.name}</strong>
+    ("the Site"). By using the Site you agree to these Terms. If you disagree, please do not use the
+    Site.
+  </p>
+
+  <h2>1. Use of the Site</h2>
+  <p>
+    You may browse, read, and download content for personal or commercial use within your own
+    organization. You may not:
+  </p>
+  <ul>
+    <li>Scrape the Site at a volume that disrupts other users</li>
+    <li>Republish substantial copies of guide content without attribution and a link back</li>
+    <li>Misrepresent the Site as an official n8n GmbH property</li>
+    <li>Use the Site to violate any law or regulation in your jurisdiction</li>
+  </ul>
+
+  <h2>2. Workflow downloads — license</h2>
+  <p>
+    Workflow files (JSON, ZIP) published on n8n.gjam.in are provided <strong>free of charge</strong>
+    for evaluation, learning, and use inside your own n8n instances. You may:
+  </p>
+  <ul>
+    <li>Import, modify, and run workflows in any n8n environment (Cloud or self-host)</li>
+    <li>Use modified workflows in commercial work and client projects</li>
+    <li>Share the original page URL with others</li>
+  </ul>
+  <p>You may not:</p>
+  <ul>
+    <li>Resell our workflow files as a paid template product</li>
+    <li>Claim authorship of the original unmodified workflow</li>
+    <li>Strip attribution from workflow documentation when republishing variants</li>
+  </ul>
+
+  <h2>3. No warranty</h2>
+  <p>
+    Content and downloads are provided <strong>"as is"</strong> without warranty of any kind. We do
+    not warrant that workflows are error-free, fit for a particular purpose, or compatible with
+    every n8n version or third-party API. You are responsible for testing workflows in a
+    non-production environment before deploying them.
+  </p>
+
+  <h2>4. Third-party services</h2>
+  <p>
+    Many workflows integrate third-party services (OpenAI, Apify, HeyGen, ElevenLabs, Meta, Google,
+    etc.). Your use of those services is governed by their terms and pricing. We are not responsible
+    for actions or charges those services trigger.
+  </p>
+
+  <h2>5. Responsible use</h2>
+  <p>
+    Some templates (e.g. lead scraping, cold email, social DM automation) can be misused. You agree
+    to:
+  </p>
+  <ul>
+    <li>Respect the terms of service of any platform you scrape or automate against</li>
+    <li>Comply with anti-spam laws in your country (CAN-SPAM, GDPR, India DPDP Act, etc.)</li>
+    <li>Honor unsubscribe requests promptly</li>
+    <li>Obtain consent where required for personal data processing</li>
+  </ul>
+
+  <h2>6. Intellectual property</h2>
+  <p>
+    Site content, guides, and original artwork are © {new Date().getFullYear()} GJAM unless noted.
+    "n8n" and the n8n logo are trademarks of n8n GmbH; we use the name nominatively to describe the
+    platform our content serves. This Site is not affiliated with, endorsed by, or sponsored by n8n
+    GmbH.
+  </p>
+
+  <h2>7. Advertising</h2>
+  <p>
+    The Site may display advertisements via Google AdSense and similar networks. Ads do not
+    constitute editorial endorsement. Ad behavior is governed by our
+    <a href="/privacy">Privacy Policy</a>.
+  </p>
+
+  <h2>8. Limitation of liability</h2>
+  <p>
+    To the maximum extent permitted by law, GJAM and contributors are not liable for any indirect,
+    incidental, special, consequential, or punitive damages, or any loss of profits or revenues
+    arising from your use of the Site or downloaded content.
+  </p>
+
+  <h2>9. Indemnity</h2>
+  <p>
+    You agree to indemnify GJAM against claims arising from your misuse of the Site, your use of
+    workflows in production without testing, or your violation of these Terms.
+  </p>
+
+  <h2>10. Changes</h2>
+  <p>
+    We may update these Terms. Continued use of the Site after changes constitutes acceptance.
+    Material changes will be flagged on the home page for at least 14 days.
+  </p>
+
+  <h2>11. Governing law</h2>
+  <p>
+    These Terms are governed by the laws of India. Any disputes shall be resolved in the courts of
+    Bengaluru, Karnataka, unless a mandatory consumer law in your jurisdiction provides otherwise.
+  </p>
+
+  <h2>12. Contact</h2>
+  <p>
+    Questions about these Terms? Email
+    <a href={`mailto:${SITE.email}`}>{SITE.email}</a>.
+  </p>
+</GuideLayout>

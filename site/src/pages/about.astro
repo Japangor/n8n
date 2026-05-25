@@ -1,0 +1,96 @@
+---
+import GuideLayout from '../layouts/GuideLayout.astro';
+import { SITE } from '../lib/site';
+
+const faqs = [
+  {
+    question: 'Who runs n8n.gjam.in?',
+    answer:
+      'n8n.gjam.in is published by GJAM — an independent automation publisher based in India. We build, document, and share n8n workflows for the wider community.',
+  },
+  {
+    question: 'Is this affiliated with n8n GmbH?',
+    answer:
+      'No. n8n is a trademark of n8n GmbH. n8n.gjam.in is an independent resource site that documents the platform and shares free templates.',
+  },
+  {
+    question: 'How is content created?',
+    answer:
+      'Every workflow is tested in our own n8n instance before publishing. Guide pages are written from hands-on production experience — Docker installs, self-hosting on VPS, AI agent deployments, and integration setups.',
+  },
+];
+---
+
+<GuideLayout
+  title="About n8n.gjam.in"
+  description="About n8n.gjam.in — an independent automation publisher sharing free n8n workflows, templates, and self-host guides. Editorial mission, sourcing, and contact."
+  path="/about"
+  breadcrumbs={[
+    { name: 'Home', path: '/' },
+    { name: 'About', path: '/about' },
+  ]}
+  faqs={faqs}
+  datePublished="2025-01-01"
+>
+  <h2>Our mission</h2>
+  <p>
+    <strong>{SITE.name}</strong> exists for one reason: <em>n8n is one of the most powerful
+    automation tools available, yet most people who land on the search results never find usable
+    workflows.</em> They find marketing pages, scattered Reddit threads, and YouTube videos that show
+    a demo but never link to the actual JSON.
+  </p>
+  <p>
+    We publish the JSON. We publish the ZIPs. We write the import steps in plain English. Everything
+    is free to download — no email gate, no signup, no upsell.
+  </p>
+
+  <h2>Who we are</h2>
+  <p>
+    GJAM is an India-based independent publisher. The team has shipped n8n in production for
+    agencies, SaaS startups, and personal projects since 2023. The workflows you download here are
+    the same templates we use internally — stripped of credentials and documented for re-use.
+  </p>
+
+  <h2>How we choose what to publish</h2>
+  <ul>
+    <li>
+      <strong>Trending demand.</strong> We watch Google Trends for India and worldwide, then build
+      what people actually search for: AI agents, voice bots, lead gen, cold email, Docker self-host.
+    </li>
+    <li>
+      <strong>Real production use.</strong> If we have not run it for at least a few weeks ourselves,
+      we do not publish it.
+    </li>
+    <li>
+      <strong>Documentation first.</strong> Every workflow page lists required integrations, file
+      size, format, use cases, and import steps before the download button.
+    </li>
+  </ul>
+
+  <h2>Editorial standards</h2>
+  <p>
+    We write opinion pieces (comparisons like <a href="/n8n-vs-zapier">n8n vs Zapier</a> and
+    <a href="/openclaw-vs-n8n">OpenClaw vs n8n</a>) with disclosed reasoning. We update guide pages
+    as the n8n platform evolves — Docker setup, MCP support, and pricing changes are tracked.
+  </p>
+  <p>
+    Where we recommend a paid tool (e.g. Apify, ElevenLabs, HeyGen), we link to the product so you
+    can evaluate it directly. We do not currently use affiliate links; if that changes, we will
+    disclose them inline.
+  </p>
+
+  <h2>Reach the editor</h2>
+  <p>
+    Spotted a broken workflow? Want us to publish a specific automation? Email
+    <a href="mailto:hello@gjam.in">hello@gjam.in</a> or visit our
+    <a href="/contact">contact page</a>.
+  </p>
+
+  <h2>Related</h2>
+  <ul>
+    <li><a href="/workflows">All free workflows</a></li>
+    <li><a href="/privacy">Privacy policy</a></li>
+    <li><a href="/terms">Terms of use</a></li>
+    <li><a href="/contact">Contact</a></li>
+  </ul>
+</GuideLayout>

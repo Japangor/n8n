@@ -1,0 +1,69 @@
+---
+import GuideLayout from '../layouts/GuideLayout.astro';
+import { SITE } from '../lib/site';
+---
+
+<GuideLayout
+  title="Contact n8n.gjam.in"
+  description="Contact n8n.gjam.in: email, workflow requests, partnership and editorial inquiries. We reply within two business days."
+  path="/contact"
+  breadcrumbs={[
+    { name: 'Home', path: '/' },
+    { name: 'Contact', path: '/contact' },
+  ]}
+  datePublished="2025-01-01"
+>
+  <p>
+    We read every message. Use the right channel below so we can reply faster.
+  </p>
+
+  <h2>General email</h2>
+  <p>
+    <a href={`mailto:${SITE.email}`}>{SITE.email}</a> — workflow requests, feedback, content
+    corrections, broken downloads.
+  </p>
+
+  <h2>What to include</h2>
+  <ul>
+    <li>The page URL on n8n.gjam.in you are referencing</li>
+    <li>Your n8n version (Cloud / self-host + version number)</li>
+    <li>Screenshots or execution log snippets if reporting a workflow issue</li>
+    <li>Your country and timezone — helps us reproduce trigger / cron issues</li>
+  </ul>
+
+  <h2>Response time</h2>
+  <p>
+    We aim to reply within <strong>two business days</strong> (IST, Monday to Friday). Workflow fix
+    requests are prioritized over general inquiries.
+  </p>
+
+  <h2>Partnerships</h2>
+  <p>
+    If you publish n8n content and want to cross-link, write to
+    <a href={`mailto:${SITE.email}`}>{SITE.email}</a> with the subject line
+    <code>Partnership</code>. We accept link exchanges only with sites that are independently useful
+    to our readers — not link farms or AI-generated dump sites.
+  </p>
+
+  <h2>Editorial corrections</h2>
+  <p>
+    Spotted a factual error in a guide (Docker command, pricing detail, integration name)? Email
+    with the page URL and the correction. We update corrections quickly and credit reporters by name
+    where appropriate.
+  </p>
+
+  <h2>Legal & DMCA</h2>
+  <p>
+    For takedown requests, copyright concerns, or data inquiries, see our
+    <a href="/privacy">privacy policy</a> and <a href="/terms">terms of use</a>. Send legal notices
+    to the same address with subject line <code>Legal</code>.
+  </p>
+
+  <h2>Not what you needed?</h2>
+  <ul>
+    <li><a href="/workflows">Browse free workflows</a></li>
+    <li><a href="/n8n-docs">n8n docs hub</a></li>
+    <li><a href="/n8n-self-host">Self-host guide</a></li>
+    <li><a href="/about">About us</a></li>
+  </ul>
+</GuideLayout>

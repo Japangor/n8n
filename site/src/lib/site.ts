@@ -7,6 +7,9 @@ export const SITE = {
   locale: 'en_IN',
   author: 'japangor',
   twitter: '@japangor',
+  email: 'japangor@gmail.com',
+  adsensePublisherId: 'ca-pub-3483870164836220',
+  gtagId: 'G-JLSL55VQGV',
 } as const;
 
 export const CATEGORIES = {

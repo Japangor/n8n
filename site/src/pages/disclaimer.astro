@@ -1,0 +1,70 @@
+---
+import GuideLayout from '../layouts/GuideLayout.astro';
+import { SITE } from '../lib/site';
+
+const lastUpdated = 'May 25, 2026';
+---
+
+<GuideLayout
+  title="Disclaimer"
+  description="Editorial and content disclaimer for n8n.gjam.in. Workflows, guides, and comparisons are for informational use; test before deploying to production."
+  path="/disclaimer"
+  breadcrumbs={[
+    { name: 'Home', path: '/' },
+    { name: 'Disclaimer', path: '/disclaimer' },
+  ]}
+  datePublished="2025-01-01"
+>
+  <p><em>Last updated: {lastUpdated}</em></p>
+
+  <h2>Informational only</h2>
+  <p>
+    Content on <strong>{SITE.name}</strong> — including workflow files, guides, comparisons, and
+    code snippets — is published for educational and informational purposes. It is not professional
+    advice. Always test workflows and configuration changes in a staging environment before running
+    them in production.
+  </p>
+
+  <h2>No affiliation with n8n GmbH</h2>
+  <p>
+    "n8n" is a trademark of n8n GmbH. This Site is an independent publisher and is not affiliated
+    with, endorsed by, or sponsored by n8n GmbH. References to n8n are nominative and used solely to
+    identify the platform our workflows target.
+  </p>
+
+  <h2>Third-party integrations</h2>
+  <p>
+    Many workflows integrate with third-party providers (OpenAI, Anthropic, Apify, ElevenLabs,
+    HeyGen, Twilio, Google Workspace, Meta APIs, etc.). Our content is not an endorsement of any
+    provider, and pricing or behavior of those services may change without notice. You are
+    responsible for reviewing each provider's terms before use.
+  </p>
+
+  <h2>Accuracy</h2>
+  <p>
+    n8n evolves quickly. Docker tags, node names, AI integrations, and platform pricing change. We
+    make reasonable efforts to keep guides current, but some details may become outdated between
+    publication and your visit. When in doubt, cross-check with official sources at
+    <a href="https://docs.n8n.io" rel="noopener noreferrer" target="_blank">docs.n8n.io</a>.
+  </p>
+
+  <h2>Advertising</h2>
+  <p>
+    Advertisements may appear on Site pages via Google AdSense or similar networks. Ad placements
+    are not editorial endorsements. See our
+    <a href="/privacy">Privacy Policy</a> for details on ad cookies and opt-out options.
+  </p>
+
+  <h2>Liability</h2>
+  <p>
+    We are not liable for losses arising from use of workflows, including but not limited to API
+    cost overruns, account suspensions on third-party platforms, data loss, or business interruption.
+    See <a href="/terms">Terms of Use</a> for the full liability section.
+  </p>
+
+  <h2>Contact</h2>
+  <p>
+    Spotted an inaccuracy? Email <a href={`mailto:${SITE.email}`}>{SITE.email}</a> with the page URL
+    and the correction. We update corrections promptly.
+  </p>
+</GuideLayout>

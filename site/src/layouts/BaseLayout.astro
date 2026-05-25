@@ -65,6 +65,24 @@ const schemas = [
       rel="stylesheet"
     />
     <script type="application/ld+json" set:html={jsonLdScript(schemas)} />
+
+    <meta name="google-adsense-account" content={SITE.adsensePublisherId} />
+    <script
+      async
+      src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${SITE.adsensePublisherId}`}
+      crossorigin="anonymous"
+    ></script>
+
+    <script async src={`https://www.googletagmanager.com/gtag/js?id=${SITE.gtagId}`}></script>
+    <script is:inline define:vars={{ gtagId: SITE.gtagId }}>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag('js', new Date());
+      gtag('config', gtagId);
+    </script>
+
     <slot name="head" />
   </head>
   <body class="min-h-screen flex flex-col">

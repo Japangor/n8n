@@ -4,45 +4,136 @@ import GuideLayout from '../layouts/GuideLayout.astro';
 const faqs = [
   {
     question: 'What is n8n Cloud?',
-    answer: 'Hosted n8n managed by n8n GmbH — no Docker maintenance, automatic updates, and team features on higher tiers.',
+    answer:
+      'n8n Cloud is the official hosted version of n8n, run by n8n GmbH. It includes automatic upgrades, daily backups, SSL, and team features on higher plans — no Docker maintenance required.',
   },
   {
-    question: 'n8n cloud vs self-host?',
-    answer: 'Cloud = speed and compliance offload. Self-host = control, data residency, and lower marginal cost at scale.',
+    question: 'How is n8n Cloud different from self-host?',
+    answer:
+      'Cloud is fastest to start and zero-ops. Self-host gives you full control, custom domains, custom nodes, and lower marginal cost at high execution volume.',
+  },
+  {
+    question: 'Can I import workflows from n8n.gjam.in into n8n Cloud?',
+    answer:
+      'Yes. All workflows on this site are standard n8n JSON or ZIP exports — they import into both Cloud and self-hosted instances identically.',
+  },
+  {
+    question: 'Does n8n Cloud support custom nodes?',
+    answer:
+      'Custom community nodes are limited on Cloud. If you rely on niche community nodes or your own custom packages, self-host is the safer choice.',
   },
 ];
 ---
 
 <GuideLayout
-  title="n8n Cloud — Hosted Automation Overview"
-  description="n8n Cloud explained: login, plans, when to choose cloud vs self-host, and importing free workflows from n8n.gjam.in."
+  title="n8n Cloud — Hosted Automation Platform Guide"
+  description="Complete guide to n8n Cloud: plans, signup, login, importing templates, when to choose cloud vs self-host, team features, and data residency considerations."
   path="/n8n-cloud"
   breadcrumbs={[
     { name: 'Home', path: '/' },
     { name: 'n8n Cloud', path: '/n8n-cloud' },
   ]}
   faqs={faqs}
+  datePublished="2025-05-01"
 >
   <p>
-    <strong>n8n cloud</strong> (+20% worldwide) is the fastest path from signup to running workflows.
-    Sign up at app.n8n.cloud, then import our templates.
+    <strong>n8n cloud</strong> searches grew +20% worldwide as teams skip the Docker step and get
+    straight to building. Cloud is the fastest path from signup to your first running workflow —
+    typically under five minutes. This page covers when to pick Cloud, how to migrate workflows,
+    and what trade-offs to expect.
   </p>
 
-  <h2>When Cloud makes sense</h2>
+  <h2>What you get with n8n Cloud</h2>
   <ul>
-    <li>Agency MVPs without DevOps</li>
-    <li>Teams needing SSO and audit on enterprise tiers</li>
-    <li>Short-lived client projects</li>
+    <li>Fully managed n8n instance on a subdomain (e.g. <code>yourcompany.app.n8n.cloud</code>)</li>
+    <li>Automatic version upgrades — no Docker pulls or migration scripts</li>
+    <li>Daily backups of workflows and credentials</li>
+    <li>HTTPS, custom domain on higher tiers</li>
+    <li>SSO and audit logs on enterprise tiers</li>
+    <li>Pay-by-execution pricing instead of per-server costs</li>
   </ul>
 
-  <h2>When to self-host instead</h2>
+  <h2>Signup and login</h2>
+  <ol>
+    <li>
+      Visit
+      <a href="https://app.n8n.cloud" rel="noopener noreferrer" target="_blank">app.n8n.cloud</a>
+      and start the free trial.
+    </li>
+    <li>Verify your email and pick a subdomain.</li>
+    <li>
+      Land on an empty editor. Now import a starter template from our
+      <a href="/workflows">workflow library</a> — go to Workflows → Import from File and select any
+      JSON download.
+    </li>
+    <li>Map credentials. n8n Cloud stores them encrypted; never paste raw keys into node fields.</li>
+    <li>Activate triggers when manual runs look clean.</li>
+  </ol>
+  <p>See our <a href="/n8n-login">n8n login guide</a> for forgotten-password flows.</p>
+
+  <h2>When Cloud is the right choice</h2>
   <ul>
-    <li>High execution volume (see <a href="/n8n-pricing">pricing</a>)</li>
-    <li>Strict data residency in India or EU</li>
-    <li>Custom nodes and forked builds</li>
+    <li>
+      <strong>Agency MVPs.</strong> Spin up a client's instance in minutes, hand off the URL, and
+      bill for setup time instead of DevOps.
+    </li>
+    <li>
+      <strong>Teams with no infrastructure engineer.</strong> Marketing and ops teams should not own
+      Docker upgrades or TLS renewals.
+    </li>
+    <li>
+      <strong>Compliance offload.</strong> Higher tiers include SOC 2 and SSO — useful if your
+      buyers ask for it.
+    </li>
+    <li>
+      <strong>Short projects.</strong> Six-week client engagements rarely justify a self-hosted
+      stack.
+    </li>
   </ul>
 
+  <h2>When self-hosting wins instead</h2>
+  <ul>
+    <li>
+      <strong>High execution volume.</strong> Past a certain monthly run count, a $20 VPS beats any
+      execution-based Cloud tier. See <a href="/n8n-pricing">pricing comparison</a>.
+    </li>
+    <li>
+      <strong>Data residency.</strong> Hosting n8n in your own AWS Mumbai or Hetzner Helsinki region
+      simplifies India DPDP and EU GDPR compliance.
+    </li>
+    <li>
+      <strong>Custom nodes.</strong> If you ship your own community nodes or forks of n8n itself.
+    </li>
+    <li>
+      <strong>Heavy AI agent loops.</strong> Self-host lets you give the runner more RAM and
+      concurrency without surprise per-execution bills.
+    </li>
+  </ul>
+
+  <h2>Migrating from self-host to Cloud (or vice versa)</h2>
+  <ol>
+    <li>Export each active workflow from the source as JSON.</li>
+    <li>Open the destination, Import from File for each workflow.</li>
+    <li>Recreate credentials manually — they cannot be exported for security reasons.</li>
+    <li>Run a manual execution on each migrated workflow.</li>
+    <li>Cutover triggers (webhooks, cron) on the destination only.</li>
+    <li>Keep the source frozen for one week as a rollback option.</li>
+  </ol>
+
+  <h2>Cost mental model</h2>
   <p>
-    <a href="/n8n-login">n8n login guide</a> · <a href="/workflows">Download workflows</a>
+    The right way to compare is <em>fully loaded cost</em>: subscription + your engineering time. A
+    $20/month VPS that needs 4 hours of monthly maintenance at ₹2,000/hour costs more than a $30
+    Cloud plan that needs zero. Inverse becomes true once executions multiply.
   </p>
+
+  <h2>Cloud-friendly templates to start with</h2>
+  <ul>
+    <li><a href="/workflows/chat-bot">Chat Bot Agent</a></li>
+    <li><a href="/workflows/cold-email-agent">Cold Email Agent</a></li>
+    <li><a href="/workflows/social-media-manager">Social Media Manager</a></li>
+    <li><a href="/workflows/newsletter-agent">Newsletter Agent</a></li>
+  </ul>
+
+  <p>Related: <a href="/n8n-self-host">Self-host guide</a> · <a href="/n8n-docker">Docker setup</a> · <a href="/n8n-pricing">Pricing</a></p>
 </GuideLayout>

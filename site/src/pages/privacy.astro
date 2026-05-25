@@ -1,0 +1,132 @@
+---
+import GuideLayout from '../layouts/GuideLayout.astro';
+import { SITE } from '../lib/site';
+
+const lastUpdated = 'May 25, 2026';
+---
+
+<GuideLayout
+  title="Privacy Policy"
+  description="Privacy policy for n8n.gjam.in. What data we collect, cookies, analytics, advertising, third parties, and your rights under GDPR and India DPDP Act."
+  path="/privacy"
+  breadcrumbs={[
+    { name: 'Home', path: '/' },
+    { name: 'Privacy', path: '/privacy' },
+  ]}
+  datePublished="2025-01-01"
+>
+  <p><em>Last updated: {lastUpdated}</em></p>
+
+  <p>
+    This Privacy Policy explains how <strong>{SITE.name}</strong> ("we", "us") collects, uses, and
+    protects information when you visit our website. By using the site you agree to this policy.
+  </p>
+
+  <h2>Information we collect</h2>
+  <h3>Information you give us</h3>
+  <p>
+    We do not require an account to browse or download workflows. If you email us at
+    <a href={`mailto:${SITE.email}`}>{SITE.email}</a>, we receive your email address and message
+    content so we can reply.
+  </p>
+
+  <h3>Information collected automatically</h3>
+  <ul>
+    <li>Standard server logs (IP address, browser type, timestamp, referrer)</li>
+    <li>Google Analytics events (page views, navigation, anonymized IP)</li>
+    <li>Cookies set by Google Analytics and Google AdSense (see below)</li>
+  </ul>
+
+  <h2>Cookies and tracking</h2>
+  <p>
+    We use <strong>Google Analytics</strong> (gtag.js, ID <code>{SITE.gtagId}</code>) to understand
+    aggregate traffic patterns. Analytics cookies are typically valid for 24 months.
+  </p>
+  <p>
+    We use <strong>Google AdSense</strong> (publisher ID <code>{SITE.adsensePublisherId}</code>) to
+    show advertisements. Google and its partners may use cookies to serve ads based on your prior
+    visits to this and other websites. You can opt out of personalized advertising at
+    <a href="https://www.google.com/settings/ads" rel="noopener noreferrer" target="_blank">google.com/settings/ads</a>
+    or via <a href="https://www.aboutads.info" rel="noopener noreferrer" target="_blank">aboutads.info</a>.
+  </p>
+
+  <h2>How we use information</h2>
+  <ul>
+    <li>To operate and improve n8n.gjam.in content</li>
+    <li>To answer support and editorial requests</li>
+    <li>To measure aggregate site performance (no individual profiling by us)</li>
+    <li>To display relevant advertising via Google AdSense</li>
+    <li>To comply with legal obligations</li>
+  </ul>
+
+  <h2>Third parties</h2>
+  <p>The following services may receive data when you visit:</p>
+  <ul>
+    <li><strong>Google Analytics</strong> — aggregate site metrics</li>
+    <li><strong>Google AdSense</strong> — ad serving and measurement</li>
+    <li><strong>Vercel</strong> — hosting provider, processes request logs</li>
+    <li><strong>Google Fonts</strong> — serves the Inter web font</li>
+  </ul>
+  <p>
+    We do not sell personal information. We do not share email addresses with marketers.
+  </p>
+
+  <h2>Workflow downloads</h2>
+  <p>
+    Workflow files (JSON / ZIP) are served as static assets. Downloading a file does not transmit
+    any additional personal data to us beyond standard server logs. Be aware that the workflow files
+    you import into your own n8n instance may interact with third-party APIs (OpenAI, Apify, etc.) —
+    those calls are governed by your credentials and those providers' policies, not ours.
+  </p>
+
+  <h2>Your rights</h2>
+  <p>Depending on where you live, you may have rights including:</p>
+  <ul>
+    <li>Access to personal data we hold about you</li>
+    <li>Correction or deletion of that data</li>
+    <li>Objection to processing or withdrawal of consent</li>
+    <li>Data portability</li>
+    <li>Lodging a complaint with a supervisory authority (e.g. Data Protection Board of India, EU DPA)</li>
+  </ul>
+  <p>
+    To exercise any right, email <a href={`mailto:${SITE.email}`}>{SITE.email}</a> with subject
+    <code>Data Request</code>. We respond within 30 days.
+  </p>
+
+  <h2>Children</h2>
+  <p>
+    n8n.gjam.in is intended for users aged 16 and above. We do not knowingly collect data from
+    children under 16. If you believe a child has provided us data, contact us for removal.
+  </p>
+
+  <h2>Data retention</h2>
+  <p>
+    Server logs are kept for up to 90 days. Email correspondence is retained for up to 24 months for
+    support continuity. Analytics aggregates are retained per Google's defaults.
+  </p>
+
+  <h2>Security</h2>
+  <p>
+    The site is served over HTTPS. We do not store passwords, payment information, or sensitive
+    personal data. We use reputable infrastructure providers but cannot guarantee absolute security
+    of internet transmissions.
+  </p>
+
+  <h2>International transfers</h2>
+  <p>
+    Our service providers may process data outside India, including in the United States and EU.
+    We rely on standard contractual clauses and provider compliance frameworks where applicable.
+  </p>
+
+  <h2>Changes to this policy</h2>
+  <p>
+    We may update this policy. The "Last updated" date at the top reflects the latest revision.
+    Material changes will be highlighted on the home page or via an in-page notice for 30 days.
+  </p>
+
+  <h2>Contact</h2>
+  <p>
+    Questions about this Privacy Policy? Email
+    <a href={`mailto:${SITE.email}`}>{SITE.email}</a>.
+  </p>
+</GuideLayout>
